@@ -17,11 +17,13 @@ def execute(json_file_path: str):
     with open(json_file_path) as json_file:
         data = json.load(json_file)
         workflow = data["workflow"]
-        
+        current_image = None
         for task in workflow:
             if task["operation"] == "dream":
-                image = functions["dream"](task["prompt"], **task["params"])
+                current_image = functions["dream"](task["prompt"], **task["params"])
             elif task["operation"] == "mask_and_inpaint":
-                functions["mask_and_inpaint"](task["mask"], data["image"])
+                current_image = functions["mask_and_inpaint"](task["mask"], data["image"])
             else:
                 raise Exception("Function not found")
+    
+    return current_image
