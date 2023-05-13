@@ -1,0 +1,20 @@
+{
+  "workflow": [
+    {
+      "operation": "dream",
+      "prompt": "a photo of an astronaut riding a horse on mars",
+      "params": {
+        "model_ckpt": "runwayml/stable-diffusion-v1-5",
+        "seed": 30
+      }
+    },
+    {
+      "operation": "dream",
+      "prompt": "A drawing of New York City in the style of Mattias Adolfsson",
+      "params": {
+        "model_ckpt": "XpucT/Deliberate",
+        "seed": 42
+      }
+    }
+  ]
+}
