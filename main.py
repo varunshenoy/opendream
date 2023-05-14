@@ -17,7 +17,6 @@ def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed:
     return image
 
 
-# this doesn't work yet lol
 @opendream.mask_and_inpaint
 def mask_and_inpaint(mask_image: Image.Image, image: Image.Image, prompt: str, model_ckpt: str = "runwayml/stable-diffusion-inpainting", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
     pipe = StableDiffusionInpaintPipeline.from_pretrained(
