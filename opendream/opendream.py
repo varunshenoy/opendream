@@ -38,6 +38,7 @@ def execute(json_file_path: str):
             if task["operation"] == "dream":
                 current_image = functions["dream"](task["prompt"], **task["params"])
             elif task["operation"] == "mask_and_inpaint":
+                # print("OK")
                 current_image = functions["mask_and_inpaint"](make_dummy_mask(), current_image, task["prompt"], **task["params"])
             else:
                 raise Exception("Function not found")
