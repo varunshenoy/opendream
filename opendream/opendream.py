@@ -2,16 +2,16 @@ import json
 
 # we need to represent the execution engine here
 
-functions = {}
+operators = {}
 def dream(dream_func):
     # FLESH OUT PARAM CHECKING, THIS NEEDS TO MATCH SO EXEC ENGINE CAN RUN
     if dream_func.__code__.co_varnames[0] != "prompt":
         raise Exception("dream function must have prompt as first argument")
-    functions["dream"] = dream_func
+    operators["dream"] = dream_func
     
 def mask_and_inpaint(mask_and_inpaint_func):
     # FLESH OUT PARAM CHECKING, THIS NEEDS TO MATCH SO EXEC ENGINE CAN RUN
-    functions["mask_and_inpaint"] = mask_and_inpaint_func
+    operators["mask_and_inpaint"] = mask_and_inpaint_func
 
 def make_dummy_mask():
     from PIL import Image, ImageDraw
@@ -36,10 +36,10 @@ def execute(json_file_path: str):
         current_image = None
         for task in workflow:
             if task["operation"] == "dream":
-                current_image = functions["dream"](task["prompt"], **task["params"])
+                current_image = operators["dream"](task["prompt"], **task["params"])
             elif task["operation"] == "mask_and_inpaint":
                 # print("OK")
-                current_image = functions["mask_and_inpaint"](make_dummy_mask(), current_image, task["prompt"], **task["params"])
+                current_image = operators["mask_and_inpaint"](make_dummy_mask(), current_image, task["prompt"], **task["params"])
             else:
                 raise Exception("Function not found")
     
