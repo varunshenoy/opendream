@@ -38,7 +38,7 @@ def execute(json_file_path: str):
 
     # override operators as necessary
     globals_vars = globals().copy()
-    breakpoint()
+
     # Iterate over global variables
     for var_name, var_value in globals_vars.items():
         # Check if the variable is a function decorated with @operator
