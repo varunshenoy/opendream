@@ -1,6 +1,7 @@
 import json
-from . import reference 
-# we need to represent the execution engine here
+from . import layer, reference, storage
+
+STORAGE = storage.Storage()
 
 operators = {}
 
@@ -12,15 +13,24 @@ def operator(func):
 
 @operator
 def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
-    return reference.dream(prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
+    image = reference.dream(prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
+    l = layer.Layer(image=image)
+    STORAGE.add_layer(l)
+    return l
 
 @operator
 def mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
-    return reference.mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
+    image = reference.mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
+    l = layer.Layer(image=image)
+    STORAGE.add_layer(l)
+    return l
 
 @operator
 def make_dummy_mask():
-    return reference.make_dummy_mask()
+    image = reference.make_dummy_mask()
+    l = layer.Layer(image=image)
+    STORAGE.add_layer(l)
+    return l
 
 
 # populate the operators dictionary 
@@ -33,9 +43,6 @@ for var_name, var_value in global_vars.items():
         operators[var_value.__name__] = var_value
 
 def execute(json_file_path: str):
-    # layers might have to be a global variable for delete to work
-    layers = []
-
     # override operators as necessary
     globals_vars = globals().copy()
 
@@ -50,9 +57,9 @@ def execute(json_file_path: str):
         workflow = data["workflow"]
         for task in workflow:
             try:
-                layers.append(operators[task["operation"]](**task["params"]))
+                operators[task["operation"]](**task["params"])
             except Exception as e:
                 print(f"Error executing {task['operation']}: {e}")
                 raise e
 
-    return layers
+    return STORAGE
