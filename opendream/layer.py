@@ -5,10 +5,12 @@ It can also optionally contain other kwargs.
 from PIL import Image
 import requests
 import typing
+import uuid
 
 class Layer:
-    def __init__(self, image: Image.Image, metadata: dict, **kwargs):
+    def __init__(self, image: Image.Image, name: str = "", metadata: dict = {}, **kwargs):
         self.image = image
+        self.name = name or uuid.uuid4()
         self.metadata = metadata
         self.kwargs = kwargs # kwargs like opacity, etc.
 
@@ -17,10 +19,29 @@ class Layer:
     
     def get_metadata(self):
         return self.metadata
+    
+    @classmethod
+    def from_url(cls, url: str, name: str = "", metadata: dict = {}, **kwargs):
+        return cls(
+            image=Image.open(requests.get(url, stream=True).raw),
+            name=name,
+            metadata=metadata,
+            **kwargs
+        )
 
-    def init_from_url(self, url: str, metadata: dict, **kwargs):
-        self.image = Image.open(requests.get(url, stream=True).raw)
-        self.metadata = {}
-        self.kwargs = {}
+    @classmethod
+    def from_binary_mask(cls,
+        pixels: typing.List[typing.Tuple[int,int]],
+        name: str = "", metadata: dict = {}, **kwargs
+    ):
+        # TODO: Convert pixels to image mask.
+        raise NotImplementedError("Need to figure this out!")
 
-
+    @classmethod
+    def from_segmentation(cls,
+        pixels: typing.List[typing.Tuple[int,int]],
+        colors: typing.List[typing.Tuple[int,int,int]],
+        name: str = "", metadata: dict = {}, **kwargs
+    ):
+        # TODO: Hmmmmm
+        raise NotImplementedError("Need to figure this out!")
