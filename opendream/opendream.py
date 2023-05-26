@@ -8,29 +8,26 @@ operators = {}
 # TODO: all decorators must return Layer objects
 # decorator to make a function into a dream operator
 def operator(func):
-    operators[func.__name__] = func
+    def final(f):
+        image = f()
+        l = layer.Layer(image=image)
+        STORAGE.add_layer(l)
+        return l
+
+    operators[func.__name__] = final(func)
     return func
 
 @operator
 def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
-    image = reference.dream(prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
-    l = layer.Layer(image=image)
-    STORAGE.add_layer(l)
-    return l
+    return reference.dream(prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
 
 @operator
 def mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
-    image = reference.mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
-    l = layer.Layer(image=image)
-    STORAGE.add_layer(l)
-    return l
+    return reference.mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
 
 @operator
 def make_dummy_mask():
-    image = reference.make_dummy_mask()
-    l = layer.Layer(image=image)
-    STORAGE.add_layer(l)
-    return l
+    return reference.make_dummy_mask()
 
 
 # populate the operators dictionary 
