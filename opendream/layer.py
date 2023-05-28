@@ -20,25 +20,25 @@ class Layer:
     def get_metadata(self):
         return self.metadata
     
-    @classmethod
-    def from_url(cls, url: str, name: str = "", metadata: dict = {}, **kwargs):
-        return cls(
+    @staticmethod
+    def from_url(url: str, name: str = "", metadata: dict = {}, **kwargs):
+        return Layer(
             image=Image.open(requests.get(url, stream=True).raw),
             name=name,
             metadata=metadata,
             **kwargs
         )
 
-    @classmethod
-    def from_binary_mask(cls,
+    @staticmethod
+    def from_binary_mask(
         pixels: typing.List[typing.Tuple[int,int]],
         name: str = "", metadata: dict = {}, **kwargs
     ):
         # TODO: Convert pixels to image mask.
         raise NotImplementedError("Need to figure this out!")
 
-    @classmethod
-    def from_segmentation(cls,
+    @staticmethod
+    def from_segmentation(
         pixels: typing.List[typing.Tuple[int,int]],
         colors: typing.List[typing.Tuple[int,int,int]],
         name: str = "", metadata: dict = {}, **kwargs
