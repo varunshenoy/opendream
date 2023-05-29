@@ -1,7 +1,5 @@
 from opendream import opendream
 from PIL import Image
-from diffusers import StableDiffusionInstructPix2PixPipeline, EulerAncestralDiscreteScheduler
-import torch
 
 
 # doing this overrides the default behavior of the default dream operator
@@ -15,16 +13,6 @@ import torch
 # def mask_and_inpaint(mask_layer, image_layer, prompt):
 #     print("Inpainting dummy")
 
-@opendream.define_op
-def instruct_pix2pix(image_layer, prompt):
-    model_id = "timbrooks/instruct-pix2pix"
-    pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_id, torch_dtype=torch.float32, safety_checker=None)
-    pipe.to("mps")
-    pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
-    
-    images = pipe(prompt, image=image_layer.get_image(), num_inference_steps=10, image_guidance_scale=1).images
-    return opendream.Layer(images[0])
-
 def create_workflow():
     # image_layer = opendream.dream("Quick brown fox jumping over lazy dog")
 
@@ -35,8 +23,8 @@ def create_workflow():
     # opendream.save("workflows/basic_test.json")
     
     image_layer = opendream.load_image_from_path("test.png")
-    transformed_layer = instruct_pix2pix(image_layer, "style of picasso")
-    opendream.save("workflows/basic_load+pix2pix.json")
+    transformed_layer = opendream.controlnet_canny(image_layer, "oil painting of a woman in the style of van gogh", model_ckpt="XpucT/Deliberate")
+    opendream.save("workflows/basic_load+controlnet.json")
 
 if __name__ == "__main__":
 

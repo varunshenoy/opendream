@@ -5,7 +5,8 @@ It can also optionally contain other kwargs.
 from PIL import Image
 import requests
 import typing
-import uuid
+import base64
+from io import BytesIO
 
 class Layer:
 
@@ -32,6 +33,24 @@ class Layer:
         
     def save_image(self):
         self.image.save(f"debug/{self.id}.png")
+        
+    def pil_to_b64(self, pil_img):
+        BASE64_PREAMBLE = "data:image/png;base64,"
+        buffered = BytesIO()
+        pil_img.save(buffered, format="PNG")
+        img_str = base64.b64encode(buffered.getvalue())
+        return BASE64_PREAMBLE + str(img_str)[2:-1]
+
+    def b64_to_pil(self, b64_str):
+        BASE64_PREAMBLE = "data:image/png;base64,"
+        return Image.open(BytesIO(base64.b64decode(b64_str.replace(BASE64_PREAMBLE, ""))))
+        
+    def serialize(self):
+        return {
+            "params": self.metadata,
+            "options": self.kwargs,
+            "image": self.pil_to_b64(self.image)
+        }
         
     @staticmethod
     def from_url(url: str, metadata: dict = {}, **kwargs):

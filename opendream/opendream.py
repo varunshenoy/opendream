@@ -62,6 +62,14 @@ def make_dummy_mask():
     return reference.make_dummy_mask()
 
 @define_op
+def instruct_pix2pix(image_layer, prompt, device = "mps"):
+    return reference.instruct_pix2pix(image_layer, prompt, device)
+
+@define_op
+def controlnet_canny(image_layer, prompt, device: str = "mps", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
+    return reference.controlnet_canny(image_layer, prompt, device, model_ckpt, batch_size, seed, selected, num_steps, **kwargs)
+
+@define_op
 def load_image_from_path(path: str):
     return Layer.from_path(path)
 
