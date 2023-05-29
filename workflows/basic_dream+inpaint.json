@@ -1,20 +1,24 @@
 {
-  "workflow": [
-    {
-      "operation": "dream",
-      "prompt": "a photo of the milky way galaxy",
-      "params": {
-        "model_ckpt": "XpucT/Deliberate",
-        "seed": 30
-      }
-    },
-    {
-      "operation": "mask_and_inpaint",
-      "prompt": "a photo of planet Earth, lush greenery, 4k, ultrarealistic",
-      "params": {
-        "model_ckpt": "5w4n/deliberate-v2-inpainting",
-        "seed": 30
-      }
+  "0": {
+    "op": "dream",
+    "params": ["a photo of the milky way galaxy"],
+    "options": {
+      "seed": 30,
+      "model_ckpt": "XpucT/Deliberate"
     }
-  ]
+  },
+  "1": {
+    "op": "make_dummy_mask",
+    "params": [],
+    "options": {}
+  },
+  "2": {
+    "op": "mask_and_inpaint",
+    "params": ["1", "0"],
+    "options": {
+      "prompt": "a photo of planet Earth, lush greenery, 4k, ultrarealistic",
+      "seed": 30,
+      "model_ckpt": "5w4n/deliberate-v2-inpainting"
+    }
+  }
 }

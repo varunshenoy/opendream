@@ -1,0 +1,17 @@
+{
+    "0": {
+        "op": "load_image_from_path",
+        "params": [
+            "test.png"
+        ],
+        "options": {}
+    },
+    "1": {
+        "op": "instruct_pix2pix",
+        "params": [
+            "0",
+            "style of picasso"
+        ],
+        "options": {}
+    }
+}
