@@ -8,14 +8,18 @@ import typing
 import uuid
 
 class Layer:
+
     def __init__(self, image: Image.Image, name: str = "", metadata: dict = {}, **kwargs):
         self.image = image
-        self.name = name or uuid.uuid4()
+        self.name = name or uuid.uuid4().hex    # clunky to store entire UUID object, store int for easy JSON writes
         self.metadata = metadata
         self.kwargs = kwargs # kwargs like opacity, etc.
 
     def get_image(self):
         return self.image
+    
+    def get_name(self):
+        return self.name
     
     def get_metadata(self):
         return self.metadata

@@ -2,7 +2,7 @@
 The `Storage` class holds information and helper functions
 for the List[Layer] backend.
 '''
-from layer import Layer
+from .layer import Layer
 
 class Storage:
     # Singleton
@@ -28,3 +28,12 @@ class Storage:
             self.ordering.remove(name)
             return True
         return False
+    
+    def get_ordering(self) -> list[str]:
+        return self.ordering
+    
+    def get_layer(self, name: str) -> Layer:
+        if name in self.layers:
+            return self.layers[name]
+        else:
+            raise KeyError(f"Layer \'{name}\' does not exist.")
