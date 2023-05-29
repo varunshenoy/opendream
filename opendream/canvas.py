@@ -4,6 +4,8 @@ for the List[Layer] backend.
 '''
 from .layer import Layer
 
+DEBUG = True
+
 class Canvas:
     
     # Singleton
@@ -22,10 +24,14 @@ class Canvas:
         self.ordering = []
 
     def add_layer(self, layer: Layer):
-        layer.set_id(self.next_id)
-        self.layers[str(self.next_id)] = layer
-        self.ordering.append(id)
+        curr_id = str(self.next_id)
+        layer.set_id(curr_id)
+        self.layers[curr_id] = layer
+        self.ordering.append(curr_id)
         self.next_id += 1
+        
+        if DEBUG:
+            layer.save_image()
 
     def delete_layer(self, layer_id: str) -> bool:
         if layer_id in self.layers:

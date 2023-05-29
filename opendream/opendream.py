@@ -30,7 +30,7 @@ def define_op(func):
         # add to CANVAS
         CANVAS.add_layer(layer)
         return layer
-
+        
     operators[func.__name__] = func 
     return wrapper
 
@@ -49,23 +49,29 @@ def save(json_file_path: str = "opendream.json"):
     with open(json_file_path, 'w') as outfile:
         json.dump(data, outfile, indent = 4)
 
+@define_op
+def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
+    return reference.dream(prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
+
+@define_op
+def mask_and_inpaint(mask_image: Layer, image: Layer, prompt: str, model_ckpt: str = "runwayml/stable-diffusion-inpainting", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
+    return reference.mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
+
+@define_op
+def make_dummy_mask():
+    return reference.make_dummy_mask()
+
+@define_op
+def load_image_from_path(path: str):
+    return Layer.from_path(path)
 
 def execute(json_file_path: str):
     
-    # delete allf iles in debug folder
+    # delete all files in debug folder
     if DEBUG:
         import os
         for filename in os.listdir("debug/"):
             os.remove(f"debug/{filename}")
-    
-    if "dream" not in operators:
-        operators["dream"] = reference.dream
-        
-    if "mask_and_inpaint" not in operators:
-        operators["mask_and_inpaint"] = reference.mask_and_inpaint
-        
-    if "make_dummy_mask" not in operators:
-        operators["make_dummy_mask"] = reference.make_dummy_mask
 
     # Execute operations outlined in json
     with open(json_file_path) as json_file:
@@ -83,9 +89,6 @@ def execute(json_file_path: str):
                 
                 # run function with arguments
                 layer = define_op(func)(*layer_metadata["params"], **layer_metadata["options"])
-                
-                if DEBUG:
-                    layer.save_image()
                 
             except Exception as e:
                 print(f"Error executing {layer_metadata['op']}: {e}")

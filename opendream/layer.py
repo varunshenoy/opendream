@@ -40,6 +40,14 @@ class Layer:
             metadata=metadata,
             **kwargs
         )
+        
+    @staticmethod
+    def from_path(path: str, metadata: dict = {}, **kwargs):
+        return Layer(
+            image=Image.open(path),
+            metadata=metadata,
+            **kwargs
+        )
 
     @staticmethod
     def from_binary_mask(

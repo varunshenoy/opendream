@@ -26,13 +26,17 @@ def instruct_pix2pix(image_layer, prompt):
     return opendream.Layer(images[0])
 
 def create_workflow():
-    # image_layer = dream("Quick brown fox jumping over lazy dog")
+    # image_layer = opendream.dream("Quick brown fox jumping over lazy dog")
 
     # mask_layer = opendream.make_dummy_mask()
 
-    # inpainted_layer = mask_and_inpaint(mask_layer, image_layer, prompt = "make the fox green")
+    # inpainted_layer = opendream.mask_and_inpaint(mask_layer, image_layer, "green fox")
 
-    layers = opendream.execute("workflows/instruct_pix2pix.json")
+    # opendream.save("workflows/basic_test.json")
+    
+    image_layer = opendream.load_image_from_path("test.png")
+    transformed_layer = instruct_pix2pix(image_layer, "style of picasso")
+    opendream.save("workflows/basic_load+pix2pix.json")
 
 if __name__ == "__main__":
 
@@ -41,6 +45,17 @@ if __name__ == "__main__":
 
     # save workflow
     #opendream.save("initial_pipeline.json")
+    
+    
+    # image_layer = opendream.load_image_from_path("test.png")
+    
+    # print(image_layer)
+    
+    # layers = opendream.execute("workflows/test.json")
+    
+    
+    # opendream.save("workflows/test.json")
+    
 
     # execute workflow from json
     # layers = opendream.execute("initial_pipeline.json")
