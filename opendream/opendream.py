@@ -66,8 +66,12 @@ def instruct_pix2pix(image_layer, prompt, device = "mps"):
     return reference.instruct_pix2pix(image_layer, prompt, device)
 
 @define_op
-def controlnet_canny(image_layer, prompt, device: str = "mps", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
+def controlnet_canny(image_layer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
     return reference.controlnet_canny(image_layer, prompt, device, model_ckpt, batch_size, seed, selected, num_steps, **kwargs)
+
+@define_op
+def controlnet_openpose(image_layer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
+    return reference.controlnet_openpose(image_layer, prompt, device, model_ckpt, batch_size, seed, selected, num_steps, **kwargs)
 
 @define_op
 def load_image_from_path(path: str):

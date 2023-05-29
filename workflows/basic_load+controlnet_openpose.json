@@ -1,0 +1,19 @@
+{
+    "0": {
+        "op": "load_image_from_path",
+        "params": [
+            "body.png"
+        ],
+        "options": {}
+    },
+    "1": {
+        "op": "controlnet_openpose",
+        "params": [
+            "0",
+            "oil painting of darth vader in the style of van gogh"
+        ],
+        "options": {
+            "model_ckpt": "XpucT/Deliberate"
+        }
+    }
+}

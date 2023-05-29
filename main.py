@@ -22,9 +22,9 @@ def create_workflow():
 
     # opendream.save("workflows/basic_test.json")
     
-    image_layer = opendream.load_image_from_path("test.png")
-    transformed_layer = opendream.controlnet_canny(image_layer, "oil painting of a woman in the style of van gogh", model_ckpt="XpucT/Deliberate")
-    opendream.save("workflows/basic_load+controlnet.json")
+    image_layer = opendream.load_image_from_path("body.png")
+    transformed_layer = opendream.controlnet_openpose(image_layer, "oil painting of darth vader in the style of van gogh", model_ckpt="XpucT/Deliberate")
+    opendream.save("workflows/basic_load+controlnet_openpose.json")
 
 if __name__ == "__main__":
 
