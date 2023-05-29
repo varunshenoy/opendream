@@ -1,0 +1,15 @@
+{
+  "0": {
+    "op": "dream",
+    "params": ["a wooden cabin in a vivid, green forest, watercolor painting"],
+    "options": {
+      "seed": 30,
+      "model_ckpt": "XpucT/Deliberate"
+    }
+  },
+  "1": {
+    "op": "instruct_pix2pix",
+    "params": ["0", "make it snowy"],
+    "options": {}
+  }
+}
