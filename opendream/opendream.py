@@ -30,7 +30,8 @@ def define_op(func):
         # add to CANVAS
         CANVAS.add_layer(layer)
         return layer
-        
+    
+    func.title = func.__name__.replace("_", " ").title()
     operators[func.__name__] = func 
     return wrapper
 
