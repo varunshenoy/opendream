@@ -1,43 +1,110 @@
-import React from "react";
-import { PlusCircle, Eye, Trash2, Paintbrush2, ScrollText } from "lucide-react";
+import { useEffect, useState } from "react";
+import { PlusCircle } from "lucide-react";
 import { Dropdown, Space } from "antd";
-
-const items = [
-  {
-    key: "0",
-    label: <a href="#">Load Image</a>,
-  },
-  {
-    key: "1",
-    label: <a href="#">Dream</a>,
-  },
-  {
-    key: "2",
-    label: <a href="#">Inpaint</a>,
-  },
-  {
-    key: "3",
-    label: <a href="#">Instruct Pix2Pix</a>,
-  },
-  {
-    key: "4",
-    label: "ControlNet",
-    children: [
-      {
-        key: "2-1",
-        label: "Canny",
-      },
-      {
-        key: "2-2",
-        label: "OpenPose",
-      },
-    ],
-  },
-];
+import ViewWorkflowButton from "./ViewWorkflowButton";
+import LayerItem from "./LayerItem";
+import LayerFormModal from "./LayerFormModal";
+import { titleCapitalize } from "../App";
 
 export const LayersPanel = () => {
+  const [items, setItems] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState("");
+  const [fields, setFields] = useState([]);
+
+  const showModal = (method) => {
+    // make query to schema here
+    const fetchData = async (method) => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/schema/" + method + "/"
+        );
+        const responseData = await response.json();
+        const cleanedResponseData = responseData.params.map((param, index) => {
+          return {
+            type: "input",
+            label: param["name"],
+            placeholder: param["default"] == null ? "" : param["default"],
+          };
+        });
+
+        console.log(cleanedResponseData);
+
+        setFields(cleanedResponseData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(method).then(() => {
+      setSelectedMethod(method);
+      setIsModalOpen(true);
+    });
+  };
+  const handleOk = () => {
+    // setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  function titleCapitalize(str) {
+    return str
+      .split("_") // Split the string at underscores
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first character of each word and make the rest lowercase
+      .join(" "); // Join the words back together with space
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/available_operations/"
+        );
+        const responseData = await response.json();
+        const cleanedResponseData = responseData.operators.map(
+          (method, index) => {
+            return {
+              key: index,
+              label: (
+                <a onClick={() => showModal(method)}>
+                  {titleCapitalize(method)}
+                </a>
+              ),
+            };
+          }
+        );
+
+        console.log(cleanedResponseData);
+
+        setItems(cleanedResponseData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="grid grid-cols-1">
+      <LayerFormModal
+        title={titleCapitalize(selectedMethod)}
+        open={isModalOpen}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        fields={fields}
+      />
       <section aria-labelledby="section-2-title">
         <div className="overflow-hidden rounded-md border border-zinc-200 bg-white">
           <div>
@@ -47,9 +114,7 @@ export const LayersPanel = () => {
                 <Space direction="vertical">
                   <Space wrap>
                     <Dropdown
-                      menu={{
-                        items,
-                      }}
+                      menu={{ items }}
                       placement="bottomRight"
                       trigger="click"
                     >
@@ -62,63 +127,22 @@ export const LayersPanel = () => {
               </span>
             </div>
 
-            <div class="p-6 flex justify-between items-center py-4">
-              <span class="flex items-center text-left">
-                <img
-                  src="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
-                  alt="Layer icon"
-                  class="w-20 h-20 mr-4"
-                ></img>
-                Layer 1
-              </span>
-              <div class="flex text-right space-x-2">
-                <a href="#" class="text-zinc-500 hover:text-zinc-900">
-                  <Paintbrush2 size={18}></Paintbrush2>
-                </a>
-                <a href="#" class="text-zinc-500 hover:text-zinc-900">
-                  <Eye size={18}></Eye>
-                </a>
-                <a href="#" class="text-zinc-500 hover:text-zinc-900">
-                  <Trash2 size={18}></Trash2>
-                </a>
-              </div>
-            </div>
+            <LayerItem
+              imgSrc="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+              title="Layer 1"
+              isMask={false}
+            />
 
-            <div class="p-6 flex justify-between items-center py-4">
-              <span class="flex items-center text-left">
-                <img
-                  src="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
-                  alt="Layer icon"
-                  class="w-20 h-20 mr-4"
-                ></img>
-                Layer 2
-                <span class="inline-block ml-2 px-2 py-1 text-xs font-semibold text-white bg-indigo-600 rounded-md">
-                  MASK
-                </span>
-              </span>
-              <div class="flex text-right space-x-2">
-                <a href="#" class="text-zinc-500 hover:text-zinc-900">
-                  <Paintbrush2 size={18}></Paintbrush2>
-                </a>
-                <a href="#" class="text-zinc-500 hover:text-zinc-900">
-                  <Eye size={18}></Eye>
-                </a>
-                <a href="#" class="text-zinc-500 hover:text-zinc-900">
-                  <Trash2 size={18}></Trash2>
-                </a>
-              </div>
-            </div>
+            <LayerItem
+              imgSrc="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
+              title="Layer 2"
+              isMask={true}
+            />
           </div>
         </div>
       </section>
 
-      <a
-        href="#"
-        className="flex items-center justify-center rounded-md bg-zinc-900 w-full px-3.5 py-2.5 my-4 text-sm font-semibold text-white shadow-sm hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600"
-      >
-        View Workflow
-        <ScrollText size={18} class="ml-2"></ScrollText>
-      </a>
+      <ViewWorkflowButton />
     </div>
   );
 };

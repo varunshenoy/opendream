@@ -1,16 +1,37 @@
 from fastapi import FastAPI, Body, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from . import opendream
+from .layer import Layer
 from typing import Any, Dict
 import inspect
 
 app = FastAPI()
+
+# Add CORSMiddleware
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/operation/{op_name}")
 async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
 
     if op_name not in opendream.operators:
         raise HTTPException(status_code=400, detail=f"Operator {op_name} not found")
-
+    
+    # iterate over params, replace base64 images with PIL images
+    for i in range(len(payload["payload"]["params"])):
+        if isinstance(payload["payload"]["params"][i], str) and payload["payload"]["params"][i].startswith("data:image/png;base64,"):
+            payload["payload"]["params"][i] = Layer.b64_to_layer(payload["payload"]["params"][i])
+    
     func = opendream.operators[op_name]
     try:
         layer = func(*payload["payload"]["params"], **payload["payload"]["options"])
@@ -19,11 +40,13 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
 
     return layer.serialize()
 
-@app.post("/available_operations")
+@app.get("/available_operations")
 async def available_operations() -> Dict[str, Any]:
-    return opendream.operators
+    to_return = {"operators": [op for op in opendream.operators]}
+    
+    return to_return
 
-@app.post("/schema/{op_name}")
+@app.get("/schema/{op_name}")
 async def schema(op_name: str) -> Dict[str, Any]:
     if op_name not in opendream.operators:
         raise HTTPException(status_code=400, detail=f"Operator {op_name} not found")
