@@ -10,7 +10,7 @@
         "op": "controlnet_openpose",
         "params": [
             "0",
-            "oil painting of darth vader in the style of van gogh"
+            "new york comedian on stage in a comedy club"
         ],
         "options": {
             "model_ckpt": "XpucT/Deliberate"

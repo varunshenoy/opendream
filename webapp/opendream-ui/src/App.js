@@ -1,4 +1,11 @@
-import { PlusCircle, Eye, Trash2, Paintbrush2, ScrollText } from "lucide-react";
+import {
+  PlusCircle,
+  Eye,
+  Trash2,
+  Paintbrush2,
+  ScrollText,
+  Layers,
+} from "lucide-react";
 import "./App.css";
 import { Button, Dropdown, Space } from "antd";
 
@@ -42,8 +49,9 @@ function App() {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
-              <div class="flex-shrink-0">
+              <div class="flex-shrink-0 flex items-center">
                 <h1 class="text-grey-900 font-bold text-2xl">Opendream</h1>
+                <Layers class="ml-2"></Layers>
               </div>
             </div>
             <div class="hidden md:block">
