@@ -35,7 +35,7 @@ class Layer:
         self.image.save(f"debug/{self.id}.png")
     
     @staticmethod
-    def pil_to_b64(self, pil_img):
+    def pil_to_b64(pil_img):
         BASE64_PREAMBLE = "data:image/png;base64,"
         buffered = BytesIO()
         pil_img.save(buffered, format="PNG")
@@ -43,18 +43,18 @@ class Layer:
         return BASE64_PREAMBLE + str(img_str)[2:-1]
 
     @staticmethod
-    def b64_to_pil(self, b64_str):
+    def b64_to_pil(b64_str):
         BASE64_PREAMBLE = "data:image/png;base64,"
         return Image.open(BytesIO(base64.b64decode(b64_str.replace(BASE64_PREAMBLE, ""))))
     
     @staticmethod
-    def b64_to_layer(self, b64_str):
+    def b64_to_layer(b64_str):
         return Layer(image=Layer.b64_to_pil(b64_str))
         
     def serialize(self):
         return {
-            "params": self.metadata,
-            "options": self.kwargs,
+            "id": self.id,
+            "metadata": self.metadata,
             "image": Layer.pil_to_b64(self.image)
         }
         
@@ -68,6 +68,10 @@ class Layer:
         
     @staticmethod
     def from_path(path: str, metadata: dict = {}, **kwargs):
+        # check if path is url
+        if path.startswith("http"):
+            return Layer.from_url(path, metadata, **kwargs)
+        
         return Layer(
             image=Image.open(path),
             metadata=metadata,

@@ -35,7 +35,7 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
     
     func = opendream.operators[op_name]
     try:
-        layer = func(*payload["payload"]["params"], **payload["payload"]["options"])
+        layer = opendream.define_op(func)(*payload["payload"]["params"], **payload["payload"]["options"])
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -70,5 +70,9 @@ async def schema(op_name: str) -> Dict[str, Any]:
     }
     
     return params_dict
+
+@app.get("/state")
+async def state() -> Dict[str, Any]:
+    return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
 
 # run uvicorn opendream.server:app --reload

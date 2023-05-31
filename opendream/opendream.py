@@ -38,13 +38,8 @@ def define_op(func):
 
 def save(json_file_path: str = "opendream.json"):
 
-    ordering = CANVAS.get_ordering()
-    data = {}
-
-    # Iterate through layer list, write metadata to dictionary
-    for i, layer_name in enumerate(ordering):
-        layer = CANVAS.get_layer(layer_name)
-        data[layer_name] = layer.get_metadata()
+    # Get workflow from canvas
+    data = CANVAS.get_workflow()
 
     # Write dictionary to disk
     with open(json_file_path, 'w') as outfile:

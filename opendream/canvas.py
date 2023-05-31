@@ -47,3 +47,16 @@ class Canvas:
         if layer_id in self.layers:
             return self.layers[layer_id]
         return None
+    
+    def get_serialized_layers(self) -> list[dict]:
+        return [self.layers[layer_id].serialize() for layer_id in self.ordering]
+    
+    def get_workflow(self):
+        data = {}
+
+        # Iterate through layer list, write metadata to dictionary
+        for i, layer_name in enumerate(self.ordering):
+            layer = self.get_layer(layer_name)
+            data[layer_name] = layer.get_metadata()
+            
+        return data
