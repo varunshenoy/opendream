@@ -6,7 +6,7 @@ import LayerItem from "./LayerItem";
 import LayerFormModal from "./LayerFormModal";
 import { titleCapitalize } from "../App";
 
-export const LayersPanel = () => {
+export const LayersPanel = ({ setImage }) => {
   const [items, setItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState("");
@@ -105,8 +105,10 @@ export const LayersPanel = () => {
         const responseData = await response.json();
         console.log(responseData);
 
-        setCurrentState(responseData["layers"]);
+        setCurrentState(responseData["layers"].reverse());
         setCurrentWorkflow(responseData["workflow"]);
+
+        setImage(responseData["layers"][0]["image"]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
