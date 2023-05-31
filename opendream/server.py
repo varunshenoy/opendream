@@ -28,15 +28,22 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
     if op_name not in opendream.operators:
         raise HTTPException(status_code=400, detail=f"Operator {op_name} not found")
     
+    print(payload["payload"]["params"])
+    
     # iterate over params, replace base64 images with PIL images
-    for i in range(len(payload["payload"]["params"])):
+    for i, arg in enumerate(payload["payload"]["params"]):
         if isinstance(payload["payload"]["params"][i], str) and payload["payload"]["params"][i].startswith("data:image/png;base64,"):
             payload["payload"]["params"][i] = Layer.b64_to_layer(payload["payload"]["params"][i])
-    
+        
+        associated_layer = opendream.CANVAS.get_layer(arg)
+        if associated_layer is not None:
+            payload["payload"]["params"][i] = associated_layer
+
     func = opendream.operators[op_name]
     try:
         layer = opendream.define_op(func)(*payload["payload"]["params"], **payload["payload"]["options"])
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
     return layer.serialize()

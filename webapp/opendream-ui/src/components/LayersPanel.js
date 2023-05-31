@@ -7,10 +7,14 @@ import LayerFormModal from "./LayerFormModal";
 import { titleCapitalize } from "../App";
 
 export const LayersPanel = () => {
-  const [items, setItems] = useState(null);
+  const [items, setItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState("");
   const [fields, setFields] = useState([]);
+  const [required, setRequired] = useState([]);
+  const [currentState, setCurrentState] = useState([]);
+  const [currentWorkflow, setCurrentWorkflow] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const showModal = (method) => {
     // make query to schema here
@@ -20,13 +24,19 @@ export const LayersPanel = () => {
           "http://127.0.0.1:8000/schema/" + method + "/"
         );
         const responseData = await response.json();
+        let checkRequired = [];
         const cleanedResponseData = responseData.params.map((param, index) => {
+          if (param["default"] === null) {
+            checkRequired.push(param["name"]);
+          }
           return {
             type: "input",
             label: param["name"],
             placeholder: param["default"] == null ? "" : param["default"],
           };
         });
+
+        setRequired(checkRequired);
 
         console.log(cleanedResponseData);
 
@@ -42,6 +52,7 @@ export const LayersPanel = () => {
     });
   };
   const handleOk = () => {
+    // make query to backend here using selectedMethod and fields
     // setIsModalOpen(false);
   };
   const handleCancel = () => {
@@ -49,7 +60,64 @@ export const LayersPanel = () => {
   };
 
   const onFinish = (values) => {
+    setLoading(true);
     console.log("Success:", values);
+
+    let query = { params: [], options: {} };
+
+    // iterate over values
+    for (const [key, value] of Object.entries(values)) {
+      // if key is in required, add to params
+      if (required.includes(key)) {
+        query["params"].push(value);
+      } else if (value !== undefined) {
+        query["options"][key] = value;
+      }
+    }
+
+    console.log(query);
+
+    const runOperation = async (method) => {
+      try {
+        // POST request using fetch with async/await
+        const response = await fetch(
+          "http://127.0.0.1:8000/operation/" + method + "/",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+          }
+        );
+
+        const responseData = await response.json();
+        console.log(responseData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const getLayerData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/state/");
+        const responseData = await response.json();
+        console.log(responseData);
+
+        setCurrentState(responseData["layers"]);
+        setCurrentWorkflow(responseData["workflow"]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    runOperation(selectedMethod).then(() => {
+      getLayerData().then(() => {
+        setLoading(false);
+        setIsModalOpen(false);
+      });
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -91,6 +159,8 @@ export const LayersPanel = () => {
       }
     };
 
+    console.log("fetching data");
+
     fetchData();
   }, []);
 
@@ -104,6 +174,7 @@ export const LayersPanel = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         fields={fields}
+        loading={loading}
       />
       <section aria-labelledby="section-2-title">
         <div className="overflow-hidden rounded-md border border-zinc-200 bg-white">
@@ -127,7 +198,18 @@ export const LayersPanel = () => {
               </span>
             </div>
 
-            <LayerItem
+            {
+              // iterate over currentState
+              currentState.map((layer, index) => (
+                <LayerItem
+                  imgSrc={layer["image"]}
+                  title={layer["id"]}
+                  isMask={false}
+                />
+              ))
+            }
+
+            {/* <LayerItem
               imgSrc="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
               title="Layer 1"
               isMask={false}
@@ -137,7 +219,7 @@ export const LayersPanel = () => {
               imgSrc="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
               title="Layer 2"
               isMask={true}
-            />
+            /> */}
           </div>
         </div>
       </section>

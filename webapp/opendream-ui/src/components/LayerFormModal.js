@@ -18,6 +18,7 @@ const LayerFormModal = ({
   onFinish,
   onFinishFailed,
   fields,
+  loading,
 }) => {
   function titleCapitalize(str) {
     return str
@@ -70,7 +71,7 @@ const LayerFormModal = ({
 
         <Form.Item
           wrapperCol={{
-            offset: 20,
+            offset: 19,
             span: 16,
           }}
         >
@@ -78,6 +79,7 @@ const LayerFormModal = ({
             type="primary"
             htmlType="submit"
             onClick={handleOk}
+            loading={loading}
             className="bg-blue-800"
           >
             Submit

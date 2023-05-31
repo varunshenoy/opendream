@@ -1,0 +1,19 @@
+{
+  "0": {
+    "op": "dream",
+    "params": ["goblin"],
+    "options": {}
+  },
+  "1": {
+    "op": "load_image_from_path",
+    "params": [
+      "https://img.freepik.com/free-photo/smiling-young-man-presenting-something_329181-1688.jpg"
+    ],
+    "options": {}
+  },
+  "2": {
+    "op": "controlnet_openpose",
+    "params": ["1", "goblin"],
+    "options": {}
+  }
+}

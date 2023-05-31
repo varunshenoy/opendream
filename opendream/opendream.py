@@ -85,9 +85,11 @@ def execute(json_file_path: str):
     with open(json_file_path) as json_file:
         data = json.load(json_file)
         for _, layer_metadata in data.items():
+            print(layer_metadata)
             try:
                 # retrieve function corresponding to json operation
                 func = operators[layer_metadata["op"]]
+                
                 
                 # cross-reference layer names with layers in canvas
                 for index, arg in enumerate(layer_metadata["params"]):
@@ -96,6 +98,7 @@ def execute(json_file_path: str):
                         layer_metadata["params"][index] = associated_layer
                 
                 # run function with arguments
+                print(func)
                 layer = define_op(func)(*layer_metadata["params"], **layer_metadata["options"])
                 
             except Exception as e:
