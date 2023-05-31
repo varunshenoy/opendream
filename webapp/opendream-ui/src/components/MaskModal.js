@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { Modal, Button, Select } from "antd";
-import { Stage, Layer, Image, Line } from 'react-konva';
+import { Stage, Layer, Image, Line } from "react-konva";
 
-const MaskModal = ({imgSrc, title, open, handleOk, handleCancel}) => {
+const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
   const [windowImg, setWindowImg] = useState(null);
-  const [tool, setTool] = useState('pen');
+  const [tool, setTool] = useState("pen");
   const [lines, setLines] = useState([]);
   const isDrawing = useRef(false);
   const stageRef = useRef(null);
@@ -17,23 +17,23 @@ const MaskModal = ({imgSrc, title, open, handleOk, handleCancel}) => {
         img.onload = function () {
           resolve(img);
         };
-        img.crossOrigin = 'Anonymous';
+        img.crossOrigin = "Anonymous";
         img.error = function (e) {
           reject(e);
         };
       });
     }
     getImage(imgSrc).then(setWindowImg);
-  }, [imgSrc])
+  }, [imgSrc]);
 
   const reset = () => {
     setLines([]);
-    setTool('pen');
-  }
+    setTool("pen");
+  };
 
   const getCanvasURI = () => {
     return stageRef.current.toDataURL();
-  }
+  };
 
   const handleMouseDown = (e) => {
     isDrawing.current = true;
@@ -67,13 +67,10 @@ const MaskModal = ({imgSrc, title, open, handleOk, handleCancel}) => {
       top={0}
       style={{ top: 20 }}
       footer={[
-        <Button
-          type="secondary"
-          onClick={reset}
-        >
+        <Button type="secondary" onClick={reset}>
           Reset
         </Button>,
-        <Button 
+        <Button
           key="submit"
           type="primary"
           htmlType="submit"
@@ -81,7 +78,7 @@ const MaskModal = ({imgSrc, title, open, handleOk, handleCancel}) => {
           className="bg-blue-800"
         >
           Submit
-        </Button>
+        </Button>,
       ]}
     >
       <Select
@@ -103,7 +100,12 @@ const MaskModal = ({imgSrc, title, open, handleOk, handleCancel}) => {
           ref={stageRef}
         >
           <Layer>
-            <Image image={windowImg} width={600} height={600} opacity={.8}></Image>
+            <Image
+              image={windowImg}
+              width={600}
+              height={600}
+              opacity={0.8}
+            ></Image>
           </Layer>
           <Layer>
             {lines.map((line, i) => (
@@ -111,12 +113,12 @@ const MaskModal = ({imgSrc, title, open, handleOk, handleCancel}) => {
                 key={i}
                 points={line.points}
                 stroke="black"
-                strokeWidth={15}
+                strokeWidth={50}
                 tension={0.5}
                 lineCap="round"
                 lineJoin="round"
                 globalCompositeOperation={
-                  line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                  line.tool === "eraser" ? "destination-out" : "source-over"
                 }
               />
             ))}
@@ -124,7 +126,7 @@ const MaskModal = ({imgSrc, title, open, handleOk, handleCancel}) => {
         </Stage>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
 export default MaskModal;
