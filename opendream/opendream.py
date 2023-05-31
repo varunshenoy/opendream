@@ -58,6 +58,10 @@ def make_dummy_mask():
     return reference.make_dummy_mask()
 
 @define_op
+def mask_from_data_URI(URI: str):
+    return reference.mask_from_data_URI(URI)
+
+@define_op
 def instruct_pix2pix(image_layer, prompt, device = "mps"):
     return reference.instruct_pix2pix(image_layer, prompt, device)
 

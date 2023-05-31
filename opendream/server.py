@@ -50,7 +50,8 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
 
 @app.get("/available_operations")
 async def available_operations() -> Dict[str, Any]:
-    to_return = {"operators": [op for op in opendream.operators]}
+    excluded_operators = ["make_dummy_mask", "mask_from_data_URI"]
+    to_return = {"operators": [op for op in opendream.operators if op not in excluded_operators]}
     
     return to_return
 

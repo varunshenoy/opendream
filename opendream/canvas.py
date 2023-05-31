@@ -2,6 +2,7 @@
 The `Storage` class holds information and helper functions
 for the List[Layer] backend.
 '''
+import typing
 from .layer import Layer
 
 DEBUG = True
@@ -40,7 +41,7 @@ class Canvas:
             return True
         return False
     
-    def get_ordering(self) -> list[str]:
+    def get_ordering(self) -> typing.List[str]:
         return self.ordering
     
     def get_layer(self, layer_id: str) -> Layer:
@@ -48,7 +49,7 @@ class Canvas:
             return self.layers[layer_id]
         return None
     
-    def get_serialized_layers(self) -> list[dict]:
+    def get_serialized_layers(self) -> typing.List[dict]:
         return [self.layers[layer_id].serialize() for layer_id in self.ordering]
     
     def get_workflow(self):

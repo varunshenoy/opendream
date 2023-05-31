@@ -12,6 +12,7 @@
     "lucide-react": "^0.224.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-konva": "^18.2.8",
     "react-scripts": "5.0.1",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",

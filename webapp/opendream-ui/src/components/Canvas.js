@@ -9,7 +9,7 @@ export const Canvas = ({ image }) => {
             {image !== "" && (
               <img
                 src={image}
-                alt="Layer icon"
+                alt="Layer image"
                 class="object-cover w-full h-full"
               ></img>
             )}
