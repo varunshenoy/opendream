@@ -12,7 +12,7 @@ const LayerItem = ({ imgSrc, title, isMask }) => {
           alt="Layer icon"
           class={`w-20 h-20 mr-4 ${isVisible ? "" : "opacity-50"}`}
         />
-        {title}
+        Layer {title}
         {isMask && (
           <span class="inline-block ml-2 px-2 py-1 text-xs font-semibold text-white bg-indigo-600 rounded-md">
             MASK
