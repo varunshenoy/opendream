@@ -2,6 +2,33 @@ import React from "react";
 import { Layers } from "lucide-react";
 
 export const Navbar = () => {
+  const [currentWorkflow, setCurrentWorkflow] = React.useState([]);
+
+  const downloadWorkflow = () => {
+    const getLayerData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/state/");
+        const responseData = await response.json();
+        console.log(responseData);
+
+        setCurrentWorkflow(responseData["workflow"]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getLayerData().then(() => {
+      const element = document.createElement("a");
+      const file = new Blob([JSON.stringify(currentWorkflow)], {
+        type: "application/json",
+      });
+      element.href = URL.createObjectURL(file);
+      element.download = "workflow.json";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    });
+  };
+
   return (
     <nav class="border-b border-zinc-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,15 +42,12 @@ export const Navbar = () => {
           <div class="hidden md:block">
             <div class="ml-auto flex items-center">
               <div class="ml-10 flex items-baseline space-x-4">
-                <a
-                  href="#"
-                  class="text-zinc-900 hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
-                >
+                <a class="text-zinc-900 hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110">
                   Import
                 </a>
                 <a
-                  href="#"
-                  class="text-zinc-900 hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
+                  onClick={downloadWorkflow}
+                  class="text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
                 >
                   Export
                 </a>

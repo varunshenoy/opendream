@@ -210,18 +210,6 @@ export const LayersPanel = ({ setImage }) => {
                 />
               ))
             }
-
-            {/* <LayerItem
-              imgSrc="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
-              title="Layer 1"
-              isMask={false}
-            />
-
-            <LayerItem
-              imgSrc="https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
-              title="Layer 2"
-              isMask={true}
-            /> */}
           </div>
         </div>
       </section>
