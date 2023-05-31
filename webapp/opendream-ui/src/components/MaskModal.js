@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Modal, Button, Select } from "antd";
 import { Stage, Layer, Image, Line } from "react-konva";
 
+// mask should have context of the size of the image
 const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
   const [windowImg, setWindowImg] = useState(null);
   const [tool, setTool] = useState("pen");
@@ -32,7 +33,30 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
   };
 
   const getCanvasURI = () => {
-    return stageRef.current.toDataURL();
+    const offScreenCanvas = document.createElement("canvas");
+    offScreenCanvas.width = windowImg.width;
+    offScreenCanvas.height = windowImg.height;
+    const ctx = offScreenCanvas.getContext("2d");
+
+    // Fill the off-screen canvas with black color
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, windowImg.width, windowImg.height);
+
+    // Draw the masked area using only white lines
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "white";
+    lines.forEach((line) => {
+      ctx.lineWidth = line.tool === "eraser" ? 0 : 50;
+      ctx.beginPath();
+      ctx.moveTo(line.points[0], line.points[1]);
+      for (let i = 2; i < line.points.length; i += 2) {
+        ctx.lineTo(line.points[i], line.points[i + 1]);
+      }
+      ctx.stroke();
+    });
+
+    return offScreenCanvas.toDataURL();
   };
 
   const handleMouseDown = (e) => {
@@ -102,8 +126,8 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
           <Layer>
             <Image
               image={windowImg}
-              width={600}
-              height={600}
+              width={512}
+              height={512}
               opacity={0.8}
             ></Image>
           </Layer>
@@ -112,7 +136,7 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
               <Line
                 key={i}
                 points={line.points}
-                stroke="black"
+                stroke="white"
                 strokeWidth={50}
                 tension={0.5}
                 lineCap="round"

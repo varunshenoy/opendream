@@ -13,7 +13,6 @@ export const LayersPanel = ({ setImage }) => {
   const [fields, setFields] = useState([]);
   const [required, setRequired] = useState([]);
   const [currentState, setCurrentState] = useState([]);
-  const [currentWorkflow, setCurrentWorkflow] = useState({});
   const [loading, setLoading] = useState(false);
 
   const showModal = (method) => {
@@ -106,7 +105,6 @@ export const LayersPanel = ({ setImage }) => {
         console.log(responseData);
 
         setCurrentState(responseData["layers"].reverse());
-        setCurrentWorkflow(responseData["workflow"]);
 
         setImage(responseData["layers"][0]["image"]);
       } catch (error) {
@@ -207,6 +205,8 @@ export const LayersPanel = ({ setImage }) => {
                   imgSrc={layer["image"]}
                   title={layer["id"]}
                   isMask={false}
+                  setImage={setImage}
+                  setCurrentState={setCurrentState}
                 />
               ))
             }

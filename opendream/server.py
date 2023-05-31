@@ -38,6 +38,11 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
         associated_layer = opendream.CANVAS.get_layer(arg)
         if associated_layer is not None:
             payload["payload"]["params"][i] = associated_layer
+            
+    # iterate over kwargs, replace string ints with ints
+    for key, value in payload["payload"]["options"].items():
+        if isinstance(value, str) and value.isdigit():
+            payload["payload"]["options"][key] = int(value)
 
     func = opendream.operators[op_name]
     try:
@@ -54,6 +59,12 @@ async def available_operations() -> Dict[str, Any]:
     to_return = {"operators": [op for op in opendream.operators if op not in excluded_operators]}
     
     return to_return
+
+@app.post("/add_mask")
+async def add_mask(payload: Dict[str, Any]) -> Dict[str, Any]:
+    layer = Layer.b64_to_layer(payload["mask"])
+    opendream.CANVAS.add_layer(layer)
+    return {"layer": layer.serialize()}
 
 @app.get("/schema/{op_name}")
 async def schema(op_name: str) -> Dict[str, Any]:
