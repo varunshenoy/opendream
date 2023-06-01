@@ -69,7 +69,7 @@ export const LayersPanel = ({ setImage }) => {
       // if key is in required, add to params
       if (required.includes(key)) {
         query["params"].push(value);
-      } else if (value !== undefined) {
+      } else if (value !== undefined && value !== "") {
         query["options"][key] = value;
       }
     }

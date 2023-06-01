@@ -43,6 +43,7 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
     for key, value in payload["payload"]["options"].items():
         if isinstance(value, str) and value.isdigit():
             payload["payload"]["options"][key] = int(value)
+        
 
     func = opendream.operators[op_name]
     try:
@@ -63,6 +64,7 @@ async def available_operations() -> Dict[str, Any]:
 @app.post("/add_mask")
 async def add_mask(payload: Dict[str, Any]) -> Dict[str, Any]:
     layer = Layer.b64_to_layer(payload["mask"])
+    layer.set_metadata({"op": "mask", "image": payload["mask"]})
     opendream.CANVAS.add_layer(layer)
     return {"layer": layer.serialize()}
 
