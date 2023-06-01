@@ -58,6 +58,12 @@ def make_dummy_mask():
     return Layer(image=mask)
 
 
+def mask_from_data_URI(URI: str):
+    print(URI)
+    # TODO: Convert Data URI to PIL Image.
+    return
+
+
 def instruct_pix2pix(image_layer, prompt, device = "mps"):
     model_id = "timbrooks/instruct-pix2pix"
     pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_id, torch_dtype=torch.float32, safety_checker=None)
