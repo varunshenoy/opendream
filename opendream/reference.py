@@ -126,6 +126,17 @@ def controlnet_openpose(image_layer, prompt, device: str = "cpu", model_ckpt: st
     
     return Layer(image=controlnet_image)
     
+def convert_mask_to_layer(mask):
+    rle_mask = mask['segmentation']
+
+    # Convert boolean mask to integer (0 or 255) for pixel values
+    image_data = np.where(rle_mask, 255, 0).astype(np.uint8)
+
+    # Create a PIL image from the image data
+    image = Image.fromarray(image_data, mode='L')
+
+    return Layer(image=image)
+
 # TODO: ONNX web runtime instead of this 
 def sam(image_layer, points=None):
     # segment anything - returns a single mask image corresponding to the points passed in
@@ -138,9 +149,6 @@ def sam(image_layer, points=None):
     print("generating mask")
     masks = mask_generator.generate(image_layer.get_np_image())
     # this should probably be with ONNX and not a remote server? 
-    for mask in masks:
-        # create a layer from the segmentation mask
-        
-    breakpoint()
-    # have it return several layers 
-    pass 
+    # return only the first mask for now
+    # TODO: allow for multiple masks
+    return [convert_mask_to_layer(mask) for mask in masks][0]
