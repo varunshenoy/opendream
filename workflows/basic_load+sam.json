@@ -1,0 +1,18 @@
+{
+    "0": {
+        "op": "load_image_from_path",
+        "params": [
+            "/Users/shashankrammoorthy/Stanford/CS348K/project/opendream/test_inputs/test.png"
+        ],
+        "options": {}
+    },
+    "1": {
+        "op": "sam",
+        "params": [
+            "0",
+            "oil painting of a woman in the style of van gogh"
+        ],
+        "options": {
+        }
+    }
+}
