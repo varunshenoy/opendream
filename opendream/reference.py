@@ -16,7 +16,7 @@ import torch
 from PIL import Image
 from controlnet_aux import CannyDetector, OpenposeDetector
 
-from .layer import Layer
+from layer import Layer
 
 
 def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
@@ -125,3 +125,22 @@ def controlnet_openpose(image_layer, prompt, device: str = "cpu", model_ckpt: st
     
     return Layer(image=controlnet_image)
     
+# TODO: ONNX web runtime instead of this 
+def sam(image_layer, points=None):
+    # segment anything - returns a single mask image corresponding to the points passed in
+    SAM_CHECKPOINT_PATH = 'sam_vit_h_4b8939.pth'
+    model_type = "vit_h"
+    # device = "cuda"
+    from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
+    sam = sam_model_registry[model_type](checkpoint=SAM_CHECKPOINT_PATH)
+    # sam.to(device)
+    mask_generator = SamAutomaticMaskGenerator(sam)
+    print("generating mask")
+    masks = mask_generator.generate(image_layer.get_np_image())
+    # this should probably be with ONNX and not a remote server? 
+    for mask in masks:
+        # create a layer from the segmentation mask
+        
+    breakpoint()
+    # have it return several layers 
+    pass 

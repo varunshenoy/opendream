@@ -3,7 +3,7 @@ The `Storage` class holds information and helper functions
 for the List[Layer] backend.
 '''
 import typing
-from .layer import Layer
+from layer import Layer
 
 DEBUG = True
 

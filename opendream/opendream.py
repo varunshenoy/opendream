@@ -1,7 +1,7 @@
 import json
-from . import reference
-from .layer import Layer
-from .canvas import Canvas
+import reference 
+from layer import Layer
+from canvas import Canvas
 
 CANVAS = Canvas()
 DEBUG = True

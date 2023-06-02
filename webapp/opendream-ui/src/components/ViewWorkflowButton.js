@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollText } from "lucide-react";
 
+// TODO: have this show the actual workflow 
 const ViewWorkflowButton = () => {
   return (
     <a
