@@ -16,8 +16,9 @@ import torch
 from PIL import Image
 from controlnet_aux import CannyDetector, OpenposeDetector
 
-from layer import Layer
+from .layer import Layer
 
+SAM_CHECKPOINT_PATH = 'checkpoints/sam_vit_h_4b8939.pth'
 
 def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
     pipe = StableDiffusionPipeline.from_pretrained(model_ckpt, torch_dtype=torch.float32, safety_checker=None)
@@ -128,7 +129,6 @@ def controlnet_openpose(image_layer, prompt, device: str = "cpu", model_ckpt: st
 # TODO: ONNX web runtime instead of this 
 def sam(image_layer, points=None):
     # segment anything - returns a single mask image corresponding to the points passed in
-    SAM_CHECKPOINT_PATH = 'sam_vit_h_4b8939.pth'
     model_type = "vit_h"
     # device = "cuda"
     from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
