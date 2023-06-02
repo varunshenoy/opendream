@@ -11,4 +11,5 @@ from reference import sam
 
 
 layer = Layer.from_url("https://i.imgur.com/KuWzaVC.png")
-sam(layer)
+mask = sam(layer)
+mask.save_image()

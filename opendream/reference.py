@@ -16,9 +16,11 @@ import torch
 from PIL import Image
 from controlnet_aux import CannyDetector, OpenposeDetector
 
-from .layer import Layer
+from layer import Layer
 
-SAM_CHECKPOINT_PATH = 'checkpoints/sam_vit_h_4b8939.pth'
+# construct path 
+ROOT = os.path.dirname(os.path.abspath(__file__))
+SAM_CHECKPOINT_PATH = os.path.join(ROOT, "checkpoints", "sam_vit_h_4b8939.pth")
 
 def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 7.5, **kwargs):
     pipe = StableDiffusionPipeline.from_pretrained(model_ckpt, torch_dtype=torch.float32, safety_checker=None)
