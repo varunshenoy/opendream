@@ -1,6 +1,6 @@
-from layer import Layer
+from .layer import Layer
 from PIL import Image
-from reference import sam
+from .reference import sam
 # USERS CAN ADD THEIR OWN OPERATIONS HERE
 
 # @opendream.define_op
@@ -10,6 +10,6 @@ from reference import sam
 #     return opendream.Layer(dummy_image)
 
 
-layer = Layer.from_url("https://i.imgur.com/KuWzaVC.png")
-mask = sam(layer)
-mask.save_image()
+# layer = Layer.from_url("https://i.imgur.com/KuWzaVC.png")
+# mask = sam(layer)
+# mask.save_image()
