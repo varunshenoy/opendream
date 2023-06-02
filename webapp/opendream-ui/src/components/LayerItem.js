@@ -69,6 +69,9 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
           src={imgSrc}
           alt="Layer icon"
           class={`w-20 h-20 mr-4 ${isVisible ? "" : "opacity-50"}`}
+          onClick={() => {
+            setImage(imgSrc);
+          }}
         />
         Layer {title}
         {isMask && (

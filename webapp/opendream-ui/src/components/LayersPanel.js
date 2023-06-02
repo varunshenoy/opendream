@@ -162,6 +162,22 @@ export const LayersPanel = ({ setImage }) => {
     console.log("fetching data");
 
     fetchData();
+
+    const getLayerData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/state/");
+        const responseData = await response.json();
+        console.log(responseData);
+
+        setCurrentState(responseData["layers"].reverse());
+
+        setImage(responseData["layers"][0]["image"]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getLayerData();
   }, []);
 
   return (
