@@ -1,5 +1,5 @@
 import json
-from . import reference 
+from . import reference
 from .layer import Layer
 from .canvas import Canvas
 

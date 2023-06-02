@@ -16,7 +16,7 @@ import torch
 from PIL import Image
 from controlnet_aux import CannyDetector, OpenposeDetector
 
-from layer import Layer
+from .layer import Layer
 
 # construct path 
 ROOT = os.path.dirname(os.path.abspath(__file__))
