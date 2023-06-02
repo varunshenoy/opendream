@@ -68,7 +68,7 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
         <img
           src={imgSrc}
           alt="Layer icon"
-          class={`w-20 h-20 mr-4 ${isVisible ? "" : "opacity-50"}`}
+          class={`w-20 h-20 mr-4 hover:cursor-zoom-in ${isVisible ? "" : "opacity-50"}`}
           onClick={() => {
             setImage(imgSrc);
           }}

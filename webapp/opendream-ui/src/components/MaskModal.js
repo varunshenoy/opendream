@@ -43,11 +43,11 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
     ctx.fillRect(0, 0, windowImg.width, windowImg.height);
 
     // Draw the masked area using only white lines
+    ctx.lineWidth = 50;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = "white";
     lines.forEach((line) => {
-      ctx.lineWidth = line.tool === "eraser" ? 0 : 50;
+      ctx.strokeStyle = line.tool === "eraser" ? "black" : "white";
       ctx.beginPath();
       ctx.moveTo(line.points[0], line.points[1]);
       for (let i = 2; i < line.points.length; i += 2) {

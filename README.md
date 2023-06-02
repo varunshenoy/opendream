@@ -4,11 +4,11 @@ Create layers. Like Photoshop. [insert other stuff here]
 
 ## Getting started
 
-Make a virtual environment, and run `pip3 install -r requirements.txt`. 
+Make a virtual environment, and run `bash ./run_opendream.sh`.
 
 ## Data model
 
-1. we have a state object, think of this as being analagous to the HTML DOM. 
+1. We have a state object, think of this as being analagous to the HTML DOM. 
 2. Users add layers - thereby making changes to the state object. 
 3. Layers have associated metadata, can have opacities, can be hidden from view, etc. Like Photoshop. 
 4. Operators create layers as output. 
