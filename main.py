@@ -24,7 +24,7 @@ def create_workflow():
     
     image_layer = opendream.load_image_from_path("test_images/body.png")
     transformed_layer = opendream.controlnet_openpose(image_layer, "oil painting of darth vader in the style of van gogh", model_ckpt="XpucT/Deliberate")
-    opendream.save("workflows/basic_load+controlnet_openpose.json")
+    opendream.save("workflows/basic_load+sam.json")
 
 if __name__ == "__main__":
 
@@ -39,8 +39,8 @@ if __name__ == "__main__":
     
     # print(image_layer)
     
-    layers = opendream.execute("workflows/upload+controlnet.json")
-    
+    layers = opendream.execute("workflows/basic_load+sam.json")
+    breakpoint()
     
     # opendream.save("workflows/test.json")
     

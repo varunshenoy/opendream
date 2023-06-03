@@ -7,6 +7,7 @@ import requests
 import typing
 import base64
 from io import BytesIO
+import numpy as np
 
 class Layer:
 
@@ -94,3 +95,6 @@ class Layer:
     ):
         # TODO: Hmmmmm
         raise NotImplementedError("Need to figure this out!")
+
+    def get_np_image(self):
+        return np.array(self.image)
