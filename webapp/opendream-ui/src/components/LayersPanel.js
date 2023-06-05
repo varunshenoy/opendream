@@ -213,14 +213,18 @@ export const LayersPanel = ({ setImage }) => {
                 </Space>
               </span>
             </div>
-
+            {
+              currentState.length === 0 && <div class="p-6 flex justify-between items-center py-4">
+                Add a new layer to begin.
+              </div>
+            }
             {
               // iterate over currentState
               currentState.map((layer, index) => (
                 <LayerItem
                   imgSrc={layer["image"]}
                   title={layer["id"]}
-                  isMask={false}
+                  isMask={(layer["metadata"]["op"] === "mask") ? true : false}
                   setImage={setImage}
                   setCurrentState={setCurrentState}
                 />

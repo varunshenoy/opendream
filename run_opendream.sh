@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Download SAM checkpoint if not already downloaded
+if [ ! -d "opendream/checkpoints" ]; then
+    mkdir -p opendream/checkpoints
+fi
+
+if [ ! -f "opendream/checkpoints/sam_vit_h_4b8939.pth" ]; then\
+    # printf "Downloading SAM checkpoint...\n"
+    printf "Downloading SAM checkpoint...\n"
+    wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth -P opendream/checkpoints/
+fi
+
+
 # Start uvicorn server
 pip install -r requirements.txt && uvicorn opendream.server:app --reload &
 

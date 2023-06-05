@@ -3,3 +3,6 @@
 .vscode
 **.pyc
 .DS_Store
+*.pth
+./debug
+./test_inputs

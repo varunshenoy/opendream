@@ -48,6 +48,7 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
     func = opendream.operators[op_name]
     try:
         layer = opendream.define_op(func)(*payload["payload"]["params"], **payload["payload"]["options"])
+        layer.set_metadata({"op": op_name})
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
