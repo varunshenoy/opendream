@@ -2,8 +2,6 @@ import React from "react";
 import { Layers } from "lucide-react";
 
 export const Navbar = () => {
-  const [currentWorkflow, setCurrentWorkflow] = React.useState([]);
-
   const downloadWorkflow = () => {
     const getLayerData = async () => {
       try {
@@ -11,13 +9,13 @@ export const Navbar = () => {
         const responseData = await response.json();
         console.log(responseData);
 
-        setCurrentWorkflow(responseData["workflow"]);
+        return responseData["workflow"];
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    getLayerData().then(() => {
+    getLayerData().then((currentWorkflow) => {
       const element = document.createElement("a");
       const file = new Blob([JSON.stringify(currentWorkflow)], {
         type: "application/json",

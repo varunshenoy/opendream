@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from opendream import opendream
 from opendream.layer import Layer
 from .layer import Layer
