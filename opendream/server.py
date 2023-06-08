@@ -47,6 +47,7 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
 
     func = opendream.operators[op_name]
     try:
+        # TODO: doesn't this mean we no longer need the define_op decorator?
         layer = opendream.define_op(func)(*payload["payload"]["params"], **payload["payload"]["options"])
         layer.set_metadata({"op": op_name})
     except Exception as e:
@@ -95,6 +96,16 @@ async def schema(op_name: str) -> Dict[str, Any]:
 
 @app.get("/state")
 async def state() -> Dict[str, Any]:
+    return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
+
+# get request because that's easier
+@app.get("/delete_layer/{layer_id}")
+async def delete_layer(layer_id) -> Dict[str, Any]:
+    # returns modified state
+    # loop through layers, find layer with id, delete it
+    print("layers before delete", opendream.CANVAS.get_serialized_layers())
+    opendream.CANVAS.delete_layer(layer_id)
+    print("layers after delete", opendream.CANVAS.get_serialized_layers())
     return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
 
 # run uvicorn opendream.server:app --reload

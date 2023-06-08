@@ -29,6 +29,7 @@ export const LayersPanel = ({ setImage }) => {
             checkRequired.push(param["name"]);
           }
           return {
+            // TODO: this should be set to "filepicker" server-side whenever something is a path
             type: "input",
             label: param["name"],
             placeholder: param["default"] == null ? "" : param["default"],

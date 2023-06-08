@@ -1,10 +1,22 @@
 import React from "react";
 import { Modal, Input, Button, Form } from "antd";
 
+const convertToBase64 = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => {
+    console.log(reader.result);
+  };
+};
+
 const generateFieldComponent = (field, placeholder) => {
   switch (field.type) {
     case "password":
       return <Input.Password />;
+    // TODO: add filepicker
+    // case "filepicker":
+    //   return <Input type="file" onChange={convertToBase64}/>;
     default:
       return <Input placeholder={placeholder} />;
   }
