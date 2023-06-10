@@ -69,9 +69,10 @@ const LayerFormModal = ({
             key={index}
             label={titleCapitalize(field.label)}
             name={field.label}
+            required={field.placeholder === ''}
             rules={[
               {
-                required: field.required,
+                required: field.placeholder === '',
                 message:
                   "Please input your " + titleCapitalize(field.label) + "!",
               },

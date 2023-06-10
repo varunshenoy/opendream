@@ -64,7 +64,14 @@ export const LayersPanel = ({ setImage }) => {
 
     let query = { params: [], options: {} };
 
-    // iterate over values
+    // Initialize the form data with the default values.
+    for (const value of fields) {
+      if (!required.includes(value.label)) {
+        query["options"][value.label] = value.placeholder;
+      }
+    }
+
+    // Iterate over values to fill in params and override defaults.
     for (const [key, value] of Object.entries(values)) {
       // if key is in required, add to params
       if (required.includes(key)) {
@@ -234,7 +241,7 @@ export const LayersPanel = ({ setImage }) => {
         </div>
       </section>
 
-      <ViewWorkflowButton />
+      {currentState.length > 0 && <ViewWorkflowButton currentState={currentState}/>}
     </div>
   );
 };
