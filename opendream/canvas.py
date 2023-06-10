@@ -42,6 +42,7 @@ class Canvas:
                 for layer_name in self.ordering[i+1:]:
                     del self.layers[layer_name]
                 self.ordering = self.ordering[:i]
+                self.next_id = i
                 return True
         
         return False

@@ -4,7 +4,6 @@ import { Dropdown, Space } from "antd";
 import ViewWorkflowButton from "./ViewWorkflowButton";
 import LayerItem from "./LayerItem";
 import LayerFormModal from "./LayerFormModal";
-import { titleCapitalize } from "../App";
 
 export const LayersPanel = ({ setImage }) => {
   const [items, setItems] = useState([]);

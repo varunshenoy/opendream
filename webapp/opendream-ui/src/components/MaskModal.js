@@ -83,10 +83,10 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
 
   return (
     <Modal
-      title={`[MASK] ${title}`}
+      title={`[MASK] Layer ${title}`}
       open={open}
-      onOk={() => handleOk(getCanvasURI())}
-      onCancel={handleCancel}
+      onOk={() => {handleOk(getCanvasURI()); reset();}}
+      onCancel={() => {handleCancel(); reset();}}
       width={window.innerWidth}
       top={0}
       style={{ top: 20 }}
@@ -98,7 +98,7 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
           key="submit"
           type="primary"
           htmlType="submit"
-          onClick={() => handleOk(getCanvasURI())}
+          onClick={() => {handleOk(getCanvasURI()); reset();}}
           className="bg-blue-800"
         >
           Submit
