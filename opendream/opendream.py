@@ -14,7 +14,13 @@ def define_op(func):
     def wrapper(*args, **kwargs):
 
         # Run decorated function
-        layer = func(*args, **kwargs)
+        layers = func(*args, **kwargs)
+
+        # if layers is not a list, make it a list
+        if not isinstance(layers, list):
+            layers = [layers]
+        # since the layers were output by the function by passing in the same 
+        # params, they all have the same metadata. We only need to set it once.
 
         # iterate through args / kwargs, replace layer objects with layer names (makes metadata compact)
         lm_args = list(args)   
@@ -25,11 +31,12 @@ def define_op(func):
             lm_kwargs[key] = value.get_id() if isinstance(value, Layer) else value
         
         # create layer, provide operation and arguments as metadata
-        layer.set_metadata({"op": func.__name__, "params": lm_args, "options": lm_kwargs})
+        for layer in layers:
+            layer.set_metadata({"op": func.__name__, "params": lm_args, "options": lm_kwargs})
+            # add to CANVAS
+            CANVAS.add_layer(layer)
 
-        # add to CANVAS
-        CANVAS.add_layer(layer)
-        return layer
+        return layers
     
     func.title = func.__name__.replace("_", " ").title()
     operators[func.__name__] = func 

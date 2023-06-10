@@ -141,16 +141,16 @@ def convert_mask_to_layer(mask):
 
 # TODO: ONNX web runtime instead of this 
 def sam(image_layer, points=None):
-    # segment anything - returns a single mask image corresponding to the points passed in
     model_type = "vit_h"
     # device = "cuda"
     from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
     sam = sam_model_registry[model_type](checkpoint=SAM_CHECKPOINT_PATH)
     # sam.to(device)
     mask_generator = SamAutomaticMaskGenerator(sam)
-    print("generating mask")
+    print(image_layer)
+    print("generating mask for " + image_layer.get_np_image().shape)
     masks = mask_generator.generate(image_layer.get_np_image())
     # this should probably be with ONNX and not a remote server? 
     # return only the first mask for now
     # TODO: allow for multiple masks
-    return [convert_mask_to_layer(mask) for mask in masks][0]
+    return [convert_mask_to_layer(mask) for mask in masks]
