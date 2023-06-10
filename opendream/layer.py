@@ -73,6 +73,8 @@ class Layer:
         if path.startswith("http"):
             return Layer.from_url(path, metadata, **kwargs)
         
+        # TODO: remove this option. this is a hacky way to make this work in our current setup - typically users will
+        # upload base64 encoded images, or perhaps links to s3 buckets
         return Layer(
             image=Image.open(path),
             metadata=metadata,

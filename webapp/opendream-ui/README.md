@@ -1,3 +1,34 @@
+# Opendream Reference Web App implementation
+
+What is a mask? Where is it passed in? 
+
+
+
+## Components
+
+### Canvas
+
+### LayerFormModal
+
+### LayerItem
+
+### LayersPanel
+
+### MaskModal
+
+
+## Operators
+
+### SAM - Segment Anything
+
+returns a collection of masks (or could be just a single mask)
+
+### Upload image from path
+
+No processing is happening locally/in-browser for now. So it uploads the image to an endpoint. Image gets added to the workflow as a base64 string.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

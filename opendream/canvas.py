@@ -35,10 +35,15 @@ class Canvas:
             layer.save_image()
 
     def delete_layer(self, layer_id: str) -> bool:
-        if layer_id in self.layers:
-            self.layers.pop(layer_id)
-            self.ordering.remove(layer_id)
-            return True
+        # and delete all layers that came after it
+        for i, layer_name in enumerate(self.ordering):
+            if layer_name == layer_id:
+                del self.layers[layer_name]
+                for layer_name in self.ordering[i+1:]:
+                    del self.layers[layer_name]
+                self.ordering = self.ordering[:i]
+                return True
+        
         return False
     
     def get_ordering(self) -> typing.List[str]:
