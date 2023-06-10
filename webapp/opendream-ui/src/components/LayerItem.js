@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Paintbrush2, Eye, Trash2, EyeOff } from "lucide-react";
+import { Paintbrush2, Eye, Trash2, EyeOff, Download } from "lucide-react";
 import MaskModal from "./MaskModal";
 
 const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
@@ -23,7 +23,7 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
       } else {
         setImage(responseData["layers"][0]["image"]);
       }
-      
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -90,7 +90,7 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
         <img
           src={imgSrc}
           alt="Layer icon"
-          class={`w-20 h-20 mr-4 hover:cursor-zoom-in ${isVisible ? "" : "opacity-50"}`}
+          class={`w-20 h-20 mr-4 cursor-zoom-in ${isVisible ? "" : "opacity-50"}`}
           onClick={() => {
             setImage(imgSrc);
           }}
@@ -105,17 +105,29 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
       <div class="flex text-right space-x-2">
         <a
           onClick={() => showMaskModal()}
-          class="text-zinc-500 hover:text-zinc-900"
+          class="text-zinc-500 hover:text-zinc-900 cursor-pointer"
         >
           <Paintbrush2 size={18}></Paintbrush2>
         </a>
         <a
+          onClick={() => {
+            // download image
+            const link = document.createElement("a");
+            link.download = "layer_" + title + ".png";
+            link.href = imgSrc;
+            link.click();
+          }}
+          class="text-zinc-500 hover:text-zinc-900 cursor-pointer"
+        >
+          <Download size={18}></Download>
+        </a>
+        {/* <a
           onClick={() => setIsVisible(!isVisible)}
-          class="text-zinc-500 hover:text-zinc-900"
+          class="text-zinc-500 hover:text-zinc-900 cursor-pointer"
         >
           {isVisible ? <Eye size={18}></Eye> : <EyeOff size={18}></EyeOff>}
-        </a>
-        <a onClick={() => deleteLayer()} class="text-zinc-500 hover:text-zinc-900">
+        </a> */}
+        <a onClick={() => deleteLayer()} class="text-zinc-500 hover:text-zinc-900 cursor-pointer">
           <Trash2 size={18}></Trash2>
         </a>
       </div>
