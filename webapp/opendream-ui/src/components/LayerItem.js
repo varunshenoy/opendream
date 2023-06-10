@@ -11,12 +11,17 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
   };
 
   const deleteLayer = async () => {
-    // send delete request to backend, then call getLayerData
-    const response = await fetch("http://127.0.0.1:8000/delete_layer/" + title);
-    const responseData = await response.json();
-    console.log("layers after delete")
-    console.log(responseData);
-    setCurrentState(responseData["layers"].reverse());
+    try {
+      const response = await fetch("http://127.0.0.1:8000/delete_layer/" + title);
+      const responseData = await response.json();
+      console.log(responseData);
+
+      setCurrentState(responseData["layers"].reverse());
+
+      setImage(responseData["layers"][0]["image"]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
 
