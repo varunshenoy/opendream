@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Input, Button, Form } from "antd";
+import { Modal, Input, Button, Form, Select, Space } from "antd";
 
 const convertToBase64 = (e) => {
   const file = e.target.files[0];
@@ -10,10 +10,62 @@ const convertToBase64 = (e) => {
   };
 };
 
-const generateFieldComponent = (field, placeholder) => {
+const generateFieldComponent = (field, placeholder, allLayers, maskLayers, imageLayers) => {
   switch (field.type) {
-    case "password":
-      return <Input.Password />;
+    case "MaskLayer":
+      return (
+        <Select
+          placeholder="Select a layer"
+          optionLabelProp="label"
+        >
+          {maskLayers.map(l => (
+            <Select.Option value={l.id} label={l.id} class="flex flex-row justify-center items-center">
+              <Space>
+                <span role="img" aria-label={l.id}>
+                  <img src={l.image} style={{ height: 80, width: 80 }}/>
+                </span>
+                Layer {l.id}
+              </Space>
+            </Select.Option>
+        ))}
+        </Select>
+      );
+      case "ImageLayer":
+        return (
+          <Select
+            placeholder="Select a layer"
+            optionLabelProp="label"
+          >
+            {imageLayers.map(l => (
+              <Select.Option value={l.id} label={l.id} class="flex flex-row justify-center items-center">
+                <Space>
+                  <span role="img" aria-label={l.id}>
+                    <img src={l.image} style={{ height: 80, width: 80 }}/>
+                  </span>
+                  Layer {l.id}
+                </Space>
+              </Select.Option>
+            ))}
+          </Select>
+        );
+      case "Layer":
+        return (
+          <Select
+            placeholder="Select a layer"
+            optionLabelProp="label"
+          >
+            {allLayers.map(l => (
+              <Select.Option value={l.id} label={l.id} class="flex flex-row justify-center items-center">
+                <Space>
+                  <span role="img" aria-label={l.id}>
+                    <img src={l.image} style={{ height: 80, width: 80 }}/>
+                  </span>
+                  Layer {l.id}
+                </Space>
+              </Select.Option>
+            ))}
+          </Select>
+        );
     // TODO: add filepicker
     // case "filepicker":
     //   return <Input type="file" onChange={convertToBase64}/>;
@@ -31,7 +83,11 @@ const LayerFormModal = ({
   onFinishFailed,
   fields,
   loading,
+  currentState,
 }) => {
+  const maskLayers = currentState.filter(layer => (layer["metadata"]["op"] === "mask"));
+  const imageLayers = currentState.filter(layer => (layer["metadata"]["op"] !== "mask"));
+
   function titleCapitalize(str) {
     return str
       .split("_") // Split the string at underscores
@@ -78,7 +134,7 @@ const LayerFormModal = ({
               },
             ]}
           >
-            {generateFieldComponent(field, field.placeholder)}
+            {generateFieldComponent(field, field.placeholder, currentState, maskLayers, imageLayers)}
           </Form.Item>
         ))}
 

@@ -29,7 +29,7 @@ export const LayersPanel = ({ setImage }) => {
           }
           return {
             // TODO: this should be set to "filepicker" server-side whenever something is a path
-            type: "input",
+            type: param["type"] || "input",
             label: param["name"],
             placeholder: param["default"] == null ? "" : param["default"],
           };
@@ -198,6 +198,7 @@ export const LayersPanel = ({ setImage }) => {
         onFinishFailed={onFinishFailed}
         fields={fields}
         loading={loading}
+        currentState={currentState}
       />
       <section aria-labelledby="section-2-title">
         <div className="overflow-hidden rounded-md border border-zinc-200 bg-white">

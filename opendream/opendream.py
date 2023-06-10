@@ -1,6 +1,6 @@
 import json
 from . import reference
-from .layer import Layer
+from .layer import Layer, ImageLayer, MaskLayer
 from .canvas import Canvas
 
 CANVAS = Canvas()
@@ -61,31 +61,27 @@ def dream(prompt: str, model_ckpt: str = "runwayml/stable-diffusion-v1-5", seed:
     return reference.dream(prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
 
 @define_op
-def mask_and_inpaint(mask_image: Layer, image: Layer, prompt: str, model_ckpt: str = "stabilityai/stable-diffusion-2-inpainting", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 11, **kwargs):
-    return reference.mask_and_inpaint(mask_image, image, prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
-
-@define_op
-def make_dummy_mask():
-    return reference.make_dummy_mask()
+def mask_and_inpaint(mask_layer: MaskLayer, image_layer: ImageLayer, prompt: str, model_ckpt: str = "stabilityai/stable-diffusion-2-inpainting", seed: int = 42, device: str = "mps", batch_size: int = 1, selected: int = 0, num_steps: int = 20, guidance_scale: float = 11, **kwargs):
+    return reference.mask_and_inpaint(mask_layer, image_layer, prompt, model_ckpt, seed, device, batch_size, selected, num_steps, guidance_scale, **kwargs)
 
 @define_op
 def mask_from_data_URI(URI: str):
     return reference.mask_from_data_URI(URI)
 
 @define_op
-def instruct_pix2pix(image_layer, prompt, device = "mps"):
+def instruct_pix2pix(image_layer: ImageLayer, prompt, device = "mps"):
     return reference.instruct_pix2pix(image_layer, prompt, device)
 
 @define_op
-def controlnet_canny(image_layer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
+def controlnet_canny(image_layer: ImageLayer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
     return reference.controlnet_canny(image_layer, prompt, device, model_ckpt, batch_size, seed, selected, num_steps, **kwargs)
 
 @define_op
-def controlnet_openpose(image_layer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
+def controlnet_openpose(image_layer: ImageLayer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
     return reference.controlnet_openpose(image_layer, prompt, device, model_ckpt, batch_size, seed, selected, num_steps, **kwargs)
 
 @define_op
-def sam(image_layer, prompt=None):
+def sam(image_layer: ImageLayer, prompt=None):
     # if no prompt is provided, return all masks
     return reference.sam(image_layer, prompt)
 
