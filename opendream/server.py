@@ -58,7 +58,7 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
 
 @app.get("/available_operations")
 async def available_operations() -> Dict[str, Any]:
-    excluded_operators = ["make_dummy_mask", "mask_from_data_URI"]
+    excluded_operators = ["mask_from_data_URI"]
     to_return = {"operators": [op for op in opendream.operators if op not in excluded_operators]}
     
     return to_return
@@ -75,8 +75,6 @@ async def schema(op_name: str) -> Dict[str, Any]:
     if op_name not in opendream.operators:
         raise HTTPException(status_code=400, detail=f"Operator {op_name} not found")
     
-    params = inspect.signature(opendream.operators[op_name]).parameters
-
     params = []
     
     for name, param in inspect.signature(opendream.operators[op_name]).parameters.items():
@@ -85,7 +83,7 @@ async def schema(op_name: str) -> Dict[str, Any]:
         params.append({
             "name": name,
             "default": param.default if param.default is not inspect.Parameter.empty else None,
-            "type": param.annotation.__name__ if param.annotation is not inspect.Parameter.empty else "unknown"
+            "type": param.annotation.__name__ if param.annotation is not inspect.Parameter.empty else None
         })
     
     params_dict = {

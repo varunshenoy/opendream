@@ -100,3 +100,12 @@ class Layer:
 
     def get_np_image(self):
         return np.array(self.image)
+    
+
+class ImageLayer(Layer):
+    def __init__(self, image: Image.Image, metadata: dict = {}, **kwargs):
+        super().__init__(image, metadata, **kwargs)
+
+class MaskLayer(Layer):
+    def __init__(self, image: Image.Image, metadata: dict = {}, **kwargs):
+        super().__init__(image, metadata, **kwargs)
