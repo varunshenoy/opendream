@@ -148,8 +148,9 @@ def sam(image_layer, points=None):
     # sam.to(device)
     mask_generator = SamAutomaticMaskGenerator(sam)
     print(image_layer)
-    print("generating mask for " + image_layer.get_np_image().shape)
+    print("generating mask for " + str(image_layer.get_np_image().shape))
     masks = mask_generator.generate(image_layer.get_np_image())
+    print("masks are " + str(len(masks)))
     # this should probably be with ONNX and not a remote server? 
     # return only the first mask for now
     # TODO: allow for multiple masks

@@ -31,10 +31,14 @@ def define_op(func):
             lm_kwargs[key] = value.get_id() if isinstance(value, Layer) else value
         
         # create layer, provide operation and arguments as metadata
-        for layer in layers:
-            layer.set_metadata({"op": func.__name__, "params": lm_args, "options": lm_kwargs})
+        print("number of layers:")
+        print(len(layers))
+        
+        for l in layers:
+            l.set_metadata({"op": func.__name__, "params": lm_args, "options": lm_kwargs})
             # add to CANVAS
-            CANVAS.add_layer(layer)
+            CANVAS.add_layer(l)
+            print("added layer to canvas")
 
         return layers
     
