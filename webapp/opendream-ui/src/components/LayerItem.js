@@ -17,8 +17,13 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
       console.log(responseData);
 
       setCurrentState(responseData["layers"].reverse());
-
-      setImage(responseData["layers"][0]["image"]);
+      
+      if (responseData["layers"].length == 0) {
+        setImage("");
+      } else {
+        setImage(responseData["layers"][0]["image"]);
+      }
+      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
