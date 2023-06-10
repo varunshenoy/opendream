@@ -104,8 +104,7 @@ async def delete_layer(layer_id) -> Dict[str, Any]:
     # returns modified state
     # loop through layers, find layer with id, delete it
     print("layers before delete", opendream.CANVAS.get_serialized_layers())
-    for layer_num in range(layer_id, len(opendream.CANVAS.get_serialized_layers())):
-        opendream.CANVAS.delete_layer(layer_num)
+    opendream.CANVAS.delete_layer(layer_id)
     print("layers after delete", opendream.CANVAS.get_serialized_layers())
     return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
 
