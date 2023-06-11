@@ -38,21 +38,6 @@ const ViewWorkflowButton = ({currentState}) => {
                   ))}</div>
                 </div>}
             </Card>
-            // <div key={index} class="flex flex-col py-2">
-            //   <span class="font-bold text-base">Layer {layer.id} - {layer.metadata.op}</span>
-              // {layer.metadata.params && <>
-              //   <span class="font-bold">Parameters:</span>
-              //   <div class="flex flex-col">{layer.metadata.params.map(param => (
-              //     <span class="pl-8">{param}</span>
-              //   ))}</div>
-              // </>}
-              // {layer.metadata.options && Object.keys(layer.metadata.options).length > 0 && <>
-              //   <span class="font-bold">Options:</span>
-              //   <div class="flex flex-col">{Object.entries(layer.metadata.options).map(([key, value]) => (
-              //     <span class="pl-8"><span class="underline">{key}</span>: {value}</span>
-              //   ))}</div>
-              // </>}
-            // </div>
           )
         })}
  
