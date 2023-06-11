@@ -6,3 +6,4 @@
 *.pth
 ./debug
 ./test_inputs
+debug

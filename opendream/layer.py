@@ -8,6 +8,7 @@ import typing
 import base64
 from io import BytesIO
 import numpy as np
+import os
 
 class Layer:
 
@@ -33,6 +34,11 @@ class Layer:
         self.metadata = metadata
         
     def save_image(self):
+        # if debug doesn't exist, create it
+        try:
+            os.mkdir("debug")
+        except:
+            pass
         self.image.save(f"debug/{self.id}.png")
     
     @staticmethod
