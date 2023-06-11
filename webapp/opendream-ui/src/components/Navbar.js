@@ -42,8 +42,8 @@ export const Navbar = () => {
               <div class="ml-10 flex items-baseline space-x-4">
 
                 {/* // TODO: this needs to show a filepicker, and that file should become a layer */}
-                <a class="text-zinc-900 hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110">
-                  Import
+                <a class="text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110">
+                  Load
                 </a>
                 <a
                   onClick={downloadWorkflow}
