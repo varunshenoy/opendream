@@ -33,7 +33,6 @@ def define_op(func):
         # create layer, provide operation and arguments as metadata
         print("number of layers:")
         print(len(layers))
-        
         for l in layers:
             l.set_metadata({"op": func.__name__, "params": lm_args, "options": lm_kwargs})
             # add to CANVAS

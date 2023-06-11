@@ -31,8 +31,8 @@ class Canvas:
         self.ordering.append(curr_id)
         self.next_id += 1
         
-        if DEBUG:
-            layer.save_image()
+        # if DEBUG:
+        #     layer.save_image()
 
     def delete_layer(self, layer_id: str) -> bool:
         # and delete all layers that came after it
