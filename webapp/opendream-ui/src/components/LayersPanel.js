@@ -5,13 +5,12 @@ import ViewWorkflowButton from "./ViewWorkflowButton";
 import LayerItem from "./LayerItem";
 import LayerFormModal from "./LayerFormModal";
 
-export const LayersPanel = ({ setImage }) => {
+export const LayersPanel = ({ setImage, currentState, setCurrentState }) => {
   const [items, setItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState("");
   const [fields, setFields] = useState([]);
   const [required, setRequired] = useState([]);
-  const [currentState, setCurrentState] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const showModal = (method) => {

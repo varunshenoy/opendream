@@ -6,14 +6,15 @@ import "./App.css";
 
 function App() {
   const [image, setImage] = useState("");
+  const [currentState, setCurrentState] = useState([]);
 
   return (
     <>
-      <Navbar />
+      <Navbar setImage={setImage} setCurrentState={setCurrentState}/>
       <div className="mt-10 pb-8">
         <div className="mx-auto max-w-3xl lg:max-w-7xl">
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-            <LayersPanel setImage={setImage} />
+            <LayersPanel setImage={setImage} currentState={currentState} setCurrentState={setCurrentState} />
             <Canvas image={image} />
           </div>
         </div>

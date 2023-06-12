@@ -35,7 +35,7 @@ def define_op(func):
         print("number of layers:")
         print(len(layers))
         for l in layers:
-            l.set_metadata({"op": func.__name__, "params": lm_args, "options": lm_kwargs})
+            l.set_metadata({"op": func.__name__, "image": Layer.pil_to_b64(l.get_image()),"params": lm_args, "options": lm_kwargs})
             # add to CANVAS
             CANVAS.add_layer(l)
             print("added layer to canvas")

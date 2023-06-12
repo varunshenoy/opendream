@@ -64,6 +64,22 @@ class Canvas:
         # Iterate through layer list, write metadata to dictionary
         for i, layer_name in enumerate(self.ordering):
             layer = self.get_layer(layer_name)
+            print(layer.get_metadata())
             data[layer_name] = layer.get_metadata()
             
         return data
+
+    def load_workflow(self, data: dict):
+        # Clear canvas
+        self.layers = {}
+        self.ordering = []
+        self.next_id = 0
+
+        # Iterate through layer list, write metadata to dictionary
+        for i, layer_name in enumerate(data):
+            layer = Layer.b64_to_layer(data[layer_name]["image"])
+            layer.set_id(layer_name)
+            layer.set_metadata(data[layer_name])
+            self.layers[layer_name] = layer
+            self.ordering.append(layer_name)
+            self.next_id += 1

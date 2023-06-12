@@ -94,6 +94,7 @@ async def schema(op_name: str) -> Dict[str, Any]:
 
 @app.get("/state")
 async def state() -> Dict[str, Any]:
+    print(opendream.CANVAS.get_workflow())
     return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
 
 # get request because that's easier
@@ -104,6 +105,12 @@ async def delete_layer(layer_id) -> Dict[str, Any]:
     print("layers before delete", opendream.CANVAS.get_serialized_layers())
     opendream.CANVAS.delete_layer(layer_id)
     print("layers after delete", opendream.CANVAS.get_serialized_layers())
+    return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
+
+@app.post("/load_workflow")
+async def load_workflow(payload: Dict[str, Any]) -> Dict[str, Any]:
+    # returns modified state
+    opendream.CANVAS.load_workflow(payload)
     return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
 
 # run uvicorn opendream.server:app --reload
