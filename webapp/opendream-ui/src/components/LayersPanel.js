@@ -232,7 +232,7 @@ export const LayersPanel = ({ setImage }) => {
                 <LayerItem
                   imgSrc={layer["image"]}
                   title={layer["id"]}
-                  isMask={(layer["metadata"]["op"] === "mask") ? true : false}
+                  isMask={(layer["metadata"]["op"] === "mask" || layer["metadata"]["op"] === "sam") ? true : false}
                   setImage={setImage}
                   setCurrentState={setCurrentState}
                 />

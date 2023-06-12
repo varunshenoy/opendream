@@ -4,6 +4,7 @@ from .layer import Layer, ImageLayer, MaskLayer
 from .canvas import Canvas
 
 CANVAS = Canvas()
+QUEUE = []
 DEBUG = True
 
 operators = {}
@@ -45,6 +46,13 @@ def define_op(func):
     operators[func.__name__] = func 
     return wrapper
 
+def add_task_to_queue(func, *args, **kwargs):
+    QUEUE.append((func, args, kwargs))
+
+def execute_queue():
+    for idx, (func, args, kwargs) in enumerate(QUEUE):
+        func(*args, **kwargs)
+        QUEUE.pop(idx)
 
 def save(json_file_path: str = "opendream.json"):
 

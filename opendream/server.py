@@ -49,6 +49,7 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
     try:
         # TODO: doesn't this mean we no longer need the define_op decorator?
         layer = opendream.define_op(func)(*payload["payload"]["params"], **payload["payload"]["options"])[-1]
+        # opendream.add_task_to_queue(func, *payload["payload"]["params"], **payload["payload"]["options"])
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))

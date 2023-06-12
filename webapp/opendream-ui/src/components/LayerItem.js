@@ -14,7 +14,7 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/delete_layer/" + title);
       const responseData = await response.json();
-      console.log(responseData);
+      // console.log(responseData);
 
       setCurrentState(responseData["layers"].reverse());
       
@@ -34,7 +34,7 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/state/");
       const responseData = await response.json();
-      console.log(responseData);
+      // console.log(responseData);
 
       setCurrentState(responseData["layers"].reverse());
 
@@ -61,7 +61,7 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
         });
 
         const responseData = await response.json();
-        console.log(responseData);
+        // console.log(responseData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
