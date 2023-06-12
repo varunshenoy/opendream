@@ -6,6 +6,31 @@ import { Modal, Card } from "antd";
 const ViewWorkflowButton = ({currentState}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const downloadWorkflow = () => {
+    const getLayerData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/state/");
+        const responseData = await response.json();
+        console.log(responseData);
+
+        return responseData["workflow"];
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getLayerData().then((currentWorkflow) => {
+      const element = document.createElement("a");
+      const file = new Blob([JSON.stringify(currentWorkflow)], {
+        type: "application/json",
+      });
+      element.href = URL.createObjectURL(file);
+      element.download = "workflow.json";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    });
+  };
+
   return (
     <>
       <Modal
@@ -42,8 +67,7 @@ const ViewWorkflowButton = ({currentState}) => {
         })}
  
         <a
-          href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(currentState))}`}
-          download="workflow.json"
+          onClick={downloadWorkflow}
           className="flex hover:text-white rounded-md bg-violet-950 w-full px-3.5 py-2.5 my-4 text-sm font-semibold text-white shadow-sm hover:bg-violet-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600"
         >
           Export Workflow <Download size={18} class="ml-2"></Download>
