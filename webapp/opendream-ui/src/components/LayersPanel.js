@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Image } from "lucide-react";
 import { Dropdown, Space } from "antd";
 import ViewWorkflowButton from "./ViewWorkflowButton";
 import LayerItem from "./LayerItem";
@@ -240,7 +240,52 @@ export const LayersPanel = ({ setImage, currentState, setCurrentState }) => {
           </div>
         </div>
       </section>
+      <a
+        onClick={() => {
 
+          const postImage = async (image) => {
+            try {
+              // POST request using fetch with async/await
+              const response = await fetch("http://127.0.0.1:8000/add_layer/", {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ image: image }),
+              });
+              const responseData = await response.json();
+  
+              console.log(responseData);
+              setCurrentState(responseData["layers"].reverse());
+              setImage(responseData["layers"][0]["image"]);
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+          };
+ 
+          const handleImageUpload = (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+              postImage(reader.result);
+            };
+          };
+
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = ".png, .jpg, .jpeg";
+          input.onchange = handleImageUpload;
+          input.click();
+
+         
+        }}
+        className="flex cursor-pointer hover:bg-cyan-800 items-center justify-center rounded-md bg-cyan-700 w-full px-3.5 py-2.5 mt-4 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600"
+      >
+        Upload Image
+        <Image size={18} class="ml-2"></Image>
+      </a>
       {currentState.length > 0 && <ViewWorkflowButton currentState={currentState}/>}
     </div>
   );

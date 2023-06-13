@@ -68,6 +68,13 @@ async def add_mask(payload: Dict[str, Any]) -> Dict[str, Any]:
     opendream.CANVAS.add_layer(layer)
     return {"layer": layer.serialize()}
 
+@app.post("/add_layer")
+async def add_layer(payload: Dict[str, Any]) -> Dict[str, Any]:
+    layer = Layer.b64_to_layer(payload["image"])
+    layer.set_metadata({"op": "load_image", "image": payload["image"]})
+    opendream.CANVAS.add_layer(layer)
+    return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
+
 @app.get("/schema/{op_name}")
 async def schema(op_name: str) -> Dict[str, Any]:
     if op_name not in opendream.operators:
