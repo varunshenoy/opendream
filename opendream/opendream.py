@@ -88,9 +88,9 @@ def controlnet_openpose(image_layer: ImageLayer, prompt, device: str = "cpu", mo
     return reference.controlnet_openpose(image_layer, prompt, device, model_ckpt, batch_size, seed, selected, num_steps, **kwargs)
 
 @define_op
-def sam(image_layer: ImageLayer, prompt=None):
+def sam(image_layer: ImageLayer):
     # if no prompt is provided, return all masks
-    return reference.sam(image_layer, prompt)
+    return reference.sam(image_layer)
 
 # @define_op
 # def load_image_from_path(path: str):
