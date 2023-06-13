@@ -92,9 +92,9 @@ def sam(image_layer: ImageLayer, prompt=None):
     # if no prompt is provided, return all masks
     return reference.sam(image_layer, prompt)
 
-@define_op
-def load_image_from_path(path: str):
-    return Layer.from_path(path)
+# @define_op
+# def load_image_from_path(path: str):
+#     return Layer.from_path(path)
 
 def execute(json_file_path: str):
     
