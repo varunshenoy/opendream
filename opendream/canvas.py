@@ -64,7 +64,6 @@ class Canvas:
         # Iterate through layer list, write metadata to dictionary
         for i, layer_name in enumerate(self.ordering):
             layer = self.get_layer(layer_name)
-            print(layer.get_metadata())
             data[layer_name] = layer.get_metadata()
             
         return data

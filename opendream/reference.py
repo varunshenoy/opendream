@@ -123,7 +123,7 @@ def convert_mask_to_layer(mask):
     # Create a PIL image from the image data
     image = Image.fromarray(image_data, mode='L')
 
-    return Layer(image=image)
+    return MaskLayer(image=image)
 
 # TODO: ONNX web runtime instead of this 
 def sam(image_layer: ImageLayer, points=None):

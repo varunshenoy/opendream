@@ -86,7 +86,7 @@ const LayerFormModal = ({
   currentState,
 }) => {
   const maskLayers = currentState.filter(layer => (layer["metadata"]["op"] === "mask" || layer["metadata"]["op"] === "sam"));
-  const imageLayers = currentState.filter(layer => (layer["metadata"]["op"] !== "mask"));
+  const imageLayers = currentState.filter(layer => (layer["metadata"]["op"] !== "mask" && layer["metadata"]["op"] !== "sam"));
 
   function titleCapitalize(str) {
     return str

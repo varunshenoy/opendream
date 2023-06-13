@@ -28,8 +28,6 @@ async def serve(op_name: str, **payload: Dict[str, Any]) -> Dict[str, Any]:
     if op_name not in opendream.operators:
         raise HTTPException(status_code=400, detail=f"Operator {op_name} not found")
     
-    print(payload["payload"]["params"])
-    
     # iterate over params, replace base64 images with PIL images
     for i, arg in enumerate(payload["payload"]["params"]):
         if isinstance(payload["payload"]["params"][i], str) and payload["payload"]["params"][i].startswith("data:image/png;base64,"):
@@ -94,7 +92,6 @@ async def schema(op_name: str) -> Dict[str, Any]:
 
 @app.get("/state")
 async def state() -> Dict[str, Any]:
-    print(opendream.CANVAS.get_workflow())
     return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
 
 # get request because that's easier
