@@ -126,7 +126,7 @@ def convert_mask_to_layer(mask):
     return MaskLayer(image=image)
 
 # TODO: ONNX web runtime instead of this 
-def sam(image_layer: ImageLayer, points=None):
+def sam(image_layer: ImageLayer):
     model_type = "vit_h"
     # device = "cuda"
     from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
