@@ -59,7 +59,7 @@ def instruct_pix2pix(image_layer: ImageLayer, prompt, device = "mps"):
     pipe.to(device)
     pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
     
-    images = pipe(prompt, image=image_layer.get_image(), num_inference_steps=10, image_guidance_scale=1).images
+    images = pipe(prompt, image=image_layer.get_image().convert("RGB"), num_inference_steps=10, image_guidance_scale=1).images
     return Layer(images[0])
 
 
