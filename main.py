@@ -39,7 +39,7 @@ if __name__ == "__main__":
     
     # print(image_layer)
     
-    layers = opendream.execute("workflows/basic_load+sam.json")
+    layers = opendream.execute("workflows/test_workflow.json")
     breakpoint()
     
     # opendream.save("workflows/test.json")
