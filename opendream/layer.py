@@ -87,23 +87,6 @@ class Layer:
             **kwargs
         )
 
-    @staticmethod
-    def from_binary_mask(
-        pixels: typing.List[typing.Tuple[int,int]],
-        metadata: dict = {}, **kwargs
-    ):
-        # TODO: Convert pixels to image mask.
-        raise NotImplementedError("Need to figure this out!")
-
-    @staticmethod
-    def from_segmentation(
-        pixels: typing.List[typing.Tuple[int,int]],
-        colors: typing.List[typing.Tuple[int,int,int]],
-        metadata: dict = {}, **kwargs
-    ):
-        # TODO: Hmmmmm
-        raise NotImplementedError("Need to figure this out!")
-
     def get_np_image(self):
         return np.array(self.image)
     
