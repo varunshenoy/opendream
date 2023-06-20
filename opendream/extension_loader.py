@@ -1,12 +1,14 @@
 import os
 import importlib.util
 
+EXTENSIONS_TO_IGNORE = []
+
 def gather_extensions(directory):
     # Add directory to Python path
     os.sys.path.append(directory)
 
     for filename in os.listdir(directory):
-        if filename.endswith('.py'):
+        if filename.endswith('.py') and filename not in EXTENSIONS_TO_IGNORE:
             # Remove file extension to get the module name
             module_name = os.path.splitext(filename)[0]
             file_path = os.path.join(directory, filename)

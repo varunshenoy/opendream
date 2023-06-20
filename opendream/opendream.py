@@ -9,9 +9,7 @@ DEBUG = True
 operators = {}
 
 # decorator to make a function into a dream operator
-def define_op(func, active=True):
-    if not active:
-        return func
+def define_op(func):
 
     def wrapper(*args, **kwargs):
 

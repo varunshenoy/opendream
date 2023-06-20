@@ -32,6 +32,11 @@ def mask_and_inpaint(mask_layer: MaskLayer, image_layer: ImageLayer, prompt: str
     )
     pipe = pipe.to(device)
     
+    # if image_layer.get_image().height != 512 or image_layer.get_image().width != 512:
+    image_layer.resize(512, 512)
+    mask_layer.resize(512, 512)
+        
+    
     generator = [torch.Generator().manual_seed(seed + i) for i in range(batch_size)]
     
     inpainted_image = pipe(prompt=prompt, image=image_layer.get_image(), mask_image=mask_layer.get_image(), generator=generator, num_inference_steps=num_steps, guidance_scale=guidance_scale).images[selected]

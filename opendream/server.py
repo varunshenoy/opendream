@@ -5,6 +5,7 @@ from .layer import Layer
 from . import extension_loader
 from typing import Any, Dict
 import inspect
+import requests
 
 app = FastAPI()
 
@@ -63,14 +64,17 @@ async def available_operations() -> Dict[str, Any]:
 @app.post("/add_mask")
 async def add_mask(payload: Dict[str, Any]) -> Dict[str, Any]:
     layer = Layer.b64_to_layer(payload["mask"])
-    layer.set_metadata({"op": "mask", "image": payload["mask"]})
+    # currently we only support square masks (512 is a memory limit)
+    # layer.resize(512, 512)
+    layer.set_metadata({"op": "mask", "image": Layer.pil_to_b64(layer.get_image()) })
     opendream.CANVAS.add_layer(layer)
     return {"layer": layer.serialize()}
 
 @app.post("/add_layer")
 async def add_layer(payload: Dict[str, Any]) -> Dict[str, Any]:
     layer = Layer.b64_to_layer(payload["image"])
-    layer.set_metadata({"op": "load_image", "image": payload["image"]})
+    # layer.resize(512, 512)
+    layer.set_metadata({"op": "load_image", "image": Layer.pil_to_b64(layer.get_image())})
     opendream.CANVAS.add_layer(layer)
     return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
 
@@ -115,5 +119,18 @@ async def load_workflow(payload: Dict[str, Any]) -> Dict[str, Any]:
     # returns modified state
     opendream.CANVAS.load_workflow(payload)
     return {"layers": opendream.CANVAS.get_serialized_layers(), "workflow": opendream.CANVAS.get_workflow()}
+
+@app.post("/save_extension")
+async def save_extension(payload: Dict[str, Any]) -> Dict[str, Any]:
+    link = payload["link"]
+    
+    # download extension to extensions folder
+    r = requests.get(link, allow_redirects=True)
+    open(f"opendream/extensions/{link.split('/')[-1]}", 'wb').write(r.content)
+
+    # reload extensions
+    extension_loader.gather_extensions("opendream/extensions/")
+    
+    return {"success" : True}
 
 # run uvicorn opendream.server:app --reload

@@ -1,7 +1,62 @@
 import React from "react";
-import { Layers } from "lucide-react";
+import {
+  Layers,
+  ArrowUpFromLine,
+  ArrowDownFromLine,
+  ToyBrick,
+  Link,
+} from "lucide-react";
+import { useState } from "react";
+import { Button, Modal, Input, message } from "antd";
 
 export const Navbar = ({ setCurrentState, setImage }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [extensionLink, setExtensionLink] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "Extension sucessfully loaded 🎉",
+    });
+  };
+
+  const handleOk = () => {
+    const downloadExtension = async (url) => {
+      try {
+        // POST request using fetch with async/await
+        const response = await fetch("http://127.0.0.1:8000/save_extension/", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ link: url }),
+        });
+        const responseData = await response.json();
+
+        console.log(responseData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setIsModalOpen(false);
+      }
+    };
+
+    downloadExtension(extensionLink).then(() => {
+      console.log("downloaded extension");
+      setExtensionLink("");
+      success();
+      setIsModalOpen(false);
+    });
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const downloadWorkflow = () => {
     const getLayerData = async () => {
       try {
@@ -47,14 +102,17 @@ export const Navbar = ({ setCurrentState, setImage }) => {
         const postWorkflow = async (workflow) => {
           try {
             // POST request using fetch with async/await
-            const response = await fetch("http://127.0.0.1:8000/load_workflow/", {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(workflow),
-            });
+            const response = await fetch(
+              "http://127.0.0.1:8000/load_workflow/",
+              {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(workflow),
+              }
+            );
             const responseData = await response.json();
 
             console.log(responseData);
@@ -68,43 +126,69 @@ export const Navbar = ({ setCurrentState, setImage }) => {
         postWorkflow(workflow).then(() => {
           console.log("workflow loaded");
         });
-      }
-    }
-  }
-
+      };
+    };
+  };
 
   return (
-    <nav class="border-b border-zinc-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-          <div class="flex items-center">
-            <div class="flex-shrink-0 flex items-center">
-              <h1 class="text-grey-900 font-bold text-2xl">Opendream</h1>
-              <Layers class="ml-2"></Layers>
+    <>
+      {contextHolder}
+      <Modal
+        title="Load an Extension"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={[<Button onClick={handleOk}>Download</Button>]}
+      >
+        <Input
+          size="large"
+          placeholder="Enter a URL (e.g. a file on GitHub)"
+          prefix={<Link />}
+          onInput={(e) => setExtensionLink(e.target.value)}
+        />
+      </Modal>
+      <nav class="border-b border-zinc-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 flex items-center">
+                <h1 class="text-grey-900 font-bold text-2xl">Opendream</h1>
+                <Layers class="ml-2"></Layers>
+              </div>
             </div>
-          </div>
-          <div class="hidden md:block">
-            <div class="ml-auto flex items-center">
-              <div class="ml-10 flex items-baseline space-x-4">
+            <div class="hidden md:block">
+              <div class="ml-auto flex items-center">
+                <div class="ml-10 flex items-baseline space-x-4">
+                  <a
+                    onClick={showModal}
+                    class="flex items-center text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
+                  >
+                    Download Extension
+                    <ToyBrick class="ml-2" size={18}></ToyBrick>
+                  </a>
+                  <a
+                    onClick={uploadWorkflow}
+                    class="flex items-center text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
+                  >
+                    Load
+                    <ArrowUpFromLine class="ml-2" size={18}></ArrowUpFromLine>
+                  </a>
 
-                {/* // TODO: this needs to show a filepicker, and that file should become a layer */}
-                <a 
-                  onClick={uploadWorkflow}
-                  class="text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
-                >
-                  Load
-                </a>
-                <a
-                  onClick={downloadWorkflow}
-                  class="text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
-                >
-                  Export
-                </a>
+                  <a
+                    onClick={downloadWorkflow}
+                    class="flex items-center text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
+                  >
+                    Export
+                    <ArrowDownFromLine
+                      class="ml-2"
+                      size={18}
+                    ></ArrowDownFromLine>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };

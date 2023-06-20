@@ -90,6 +90,9 @@ class Layer:
     def get_np_image(self):
         return np.array(self.image)
     
+    def resize(self, width: int, height: int):
+        self.image = self.image.resize((width, height))
+    
 
 class ImageLayer(Layer):
     def __init__(self, image: Image.Image, metadata: dict = {}, **kwargs):

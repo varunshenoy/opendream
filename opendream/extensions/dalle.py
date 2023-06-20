@@ -1,10 +1,11 @@
 from opendream import opendream
 from opendream.layer import Layer
 
-@opendream.define_op(active=False)
+import openai
+import os
+
+@opendream.define_op
 def dream(prompt: str):
-    import openai
-    import os
     
     openai.api_key = os.environ["OPENAI_API_KEY"]
     
