@@ -2,7 +2,7 @@ from fastapi import FastAPI, Body, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from . import opendream
 from .layer import Layer
-from . import extensions
+from . import extension_loader
 from typing import Any, Dict
 import inspect
 
