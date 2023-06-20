@@ -9,6 +9,7 @@ import base64
 from io import BytesIO
 import numpy as np
 import os
+import re
 
 class Layer:
 
@@ -43,17 +44,32 @@ class Layer:
     
     @staticmethod
     def pil_to_b64(pil_img):
-        BASE64_PREAMBLE = "data:image/png;base64,"
+        # Determine the format of the input PIL image
+        img_format = pil_img.format.upper() if pil_img.format else "PNG"
+
+        # Create the base64 preamble with the correct image format
+        BASE64_PREAMBLE = f"data:image/{img_format.lower()};base64,"
+
+        # Save the PIL image to a byte buffer
         buffered = BytesIO()
-        pil_img.save(buffered, format="PNG")
+        pil_img.save(buffered, format=img_format)
+
+        # Encode the byte buffer as base64 and return the complete string
         img_str = base64.b64encode(buffered.getvalue())
         return BASE64_PREAMBLE + str(img_str)[2:-1]
 
+
     @staticmethod
     def b64_to_pil(b64_str):
-        BASE64_PREAMBLE = "data:image/png;base64,"
-        return Image.open(BytesIO(base64.b64decode(b64_str.replace(BASE64_PREAMBLE, ""))))
-    
+        # Generalized base64 preamble pattern
+        PREAMBLE_REGEX = r'data:image/[^;]+;base64,'
+
+        # Remove the base64 preamble
+        b64_str_without_preamble = re.sub(PREAMBLE_REGEX, "", b64_str)
+
+        # Decode base64 string and create a PIL Image object
+        return Image.open(BytesIO(base64.b64decode(b64_str_without_preamble)))
+
     @staticmethod
     def b64_to_layer(b64_str):
         return Layer(image=Layer.b64_to_pil(b64_str))

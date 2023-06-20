@@ -83,11 +83,18 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
 
   return (
     <Modal
-      title={`[MASK] Layer ${title}`}
+      title={`Drawing Mask for Layer ${title}`}
       open={open}
-      onOk={() => {handleOk(getCanvasURI()); reset();}}
-      onCancel={() => {handleCancel(); reset();}}
+      onOk={() => {
+        handleOk(getCanvasURI());
+        reset();
+      }}
+      onCancel={() => {
+        handleCancel();
+        reset();
+      }}
       width={window.innerWidth}
+      maskClosable={false}
       top={0}
       style={{ top: 20 }}
       footer={[
@@ -98,7 +105,10 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
           key="submit"
           type="primary"
           htmlType="submit"
-          onClick={() => {handleOk(getCanvasURI()); reset();}}
+          onClick={() => {
+            handleOk(getCanvasURI());
+            reset();
+          }}
           className="bg-blue-800"
         >
           Submit
@@ -114,10 +124,13 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
         ]}
         onChange={(value) => setTool(value)}
       />
+      <p className="text-sm italic py-2">
+        Currently, this tool only supports 512 x 512 images.
+      </p>
       <div className="flex items-center justify-center">
         <Stage
-          width={600}
-          height={600}
+          width={512}
+          height={512}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}

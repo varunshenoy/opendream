@@ -12,23 +12,23 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
 
   const deleteLayer = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/delete_layer/" + title);
+      const response = await fetch(
+        "http://127.0.0.1:8000/delete_layer/" + title
+      );
       const responseData = await response.json();
       // console.log(responseData);
 
       setCurrentState(responseData["layers"].reverse());
-      
+
       if (responseData["layers"].length == 0) {
         setImage("");
       } else {
         setImage(responseData["layers"][0]["image"]);
       }
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }
-
+  };
 
   const getLayerData = async () => {
     try {
@@ -43,8 +43,6 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
       console.error("Error fetching data:", error);
     }
   };
-
-
 
   const handleOk = (URI) => {
     // send post request to backend
@@ -85,12 +83,15 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
         open={isMaskModalOpen}
         handleOk={handleOk}
         handleCancel={handleCancel}
+        maskClosable={false}
       />
       <span class="flex items-center text-left">
         <img
           src={imgSrc}
           alt="Layer icon"
-          class={`w-20 h-20 mr-4 cursor-zoom-in ${isVisible ? "" : "opacity-50"}`}
+          class={`w-20 h-20 mr-4 cursor-zoom-in ${
+            isVisible ? "" : "opacity-50"
+          }`}
           onClick={() => {
             setImage(imgSrc);
           }}
@@ -127,7 +128,10 @@ const LayerItem = ({ imgSrc, title, isMask, setCurrentState, setImage }) => {
         >
           {isVisible ? <Eye size={18}></Eye> : <EyeOff size={18}></EyeOff>}
         </a> */}
-        <a onClick={() => deleteLayer()} class="text-zinc-500 hover:text-zinc-900 cursor-pointer">
+        <a
+          onClick={() => deleteLayer()}
+          class="text-zinc-500 hover:text-zinc-900 cursor-pointer"
+        >
           <Trash2 size={18}></Trash2>
         </a>
       </div>

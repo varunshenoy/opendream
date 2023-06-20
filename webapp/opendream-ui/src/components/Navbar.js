@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Layers,
-  ArrowUpFromLine,
-  ArrowDownFromLine,
-  ToyBrick,
-  Link,
-} from "lucide-react";
+import { Layers, ArrowUpFromLine, Forward, Boxes, Link } from "lucide-react";
 import { useState } from "react";
 import { Button, Modal, Input, message } from "antd";
 
@@ -162,14 +156,14 @@ export const Navbar = ({ setCurrentState, setImage }) => {
                     onClick={showModal}
                     class="flex items-center text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
                   >
-                    Download Extension
-                    <ToyBrick class="ml-2" size={18}></ToyBrick>
+                    Load Extension
+                    <Boxes class="ml-2" size={18}></Boxes>
                   </a>
                   <a
                     onClick={uploadWorkflow}
                     class="flex items-center text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
                   >
-                    Load
+                    Load Workflow
                     <ArrowUpFromLine class="ml-2" size={18}></ArrowUpFromLine>
                   </a>
 
@@ -177,11 +171,8 @@ export const Navbar = ({ setCurrentState, setImage }) => {
                     onClick={downloadWorkflow}
                     class="flex items-center text-zinc-900 cursor-pointer hover:bg-zinc-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-110"
                   >
-                    Export
-                    <ArrowDownFromLine
-                      class="ml-2"
-                      size={18}
-                    ></ArrowDownFromLine>
+                    Export Workflow
+                    <Forward class="ml-2" size={18}></Forward>
                   </a>
                 </div>
               </div>

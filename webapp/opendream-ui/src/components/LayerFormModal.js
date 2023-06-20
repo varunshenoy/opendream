@@ -10,62 +10,71 @@ const convertToBase64 = (e) => {
   };
 };
 
-const generateFieldComponent = (field, placeholder, allLayers, maskLayers, imageLayers) => {
+const generateFieldComponent = (
+  field,
+  placeholder,
+  allLayers,
+  maskLayers,
+  imageLayers
+) => {
   switch (field.type) {
     case "MaskLayer":
       return (
-        <Select
-          placeholder="Select a layer"
-          optionLabelProp="label"
-        >
-          {maskLayers.map(l => (
-            <Select.Option value={l.id} label={l.id} class="flex flex-row justify-center items-center">
+        <Select placeholder="Select a layer" optionLabelProp="label">
+          {maskLayers.map((l) => (
+            <Select.Option
+              value={l.id}
+              label={l.id}
+              class="flex flex-row justify-center items-center"
+            >
               <Space>
                 <span role="img" aria-label={l.id}>
-                  <img src={l.image} style={{ height: 80, width: 80 }}/>
+                  <img src={l.image} style={{ height: 80, width: 80 }} />
                 </span>
                 Layer {l.id}
               </Space>
             </Select.Option>
-        ))}
+          ))}
         </Select>
       );
-      case "ImageLayer":
-        return (
-          <Select
-            placeholder="Select a layer"
-            optionLabelProp="label"
-          >
-            {imageLayers.map(l => (
-              <Select.Option value={l.id} label={l.id} class="flex flex-row justify-center items-center">
-                <Space>
-                  <span role="img" aria-label={l.id}>
-                    <img src={l.image} style={{ height: 80, width: 80 }}/>
-                  </span>
-                  Layer {l.id}
-                </Space>
-              </Select.Option>
-            ))}
-          </Select>
-        );
-      case "Layer":
-        return (
-          <Select
-            placeholder="Select a layer"
-            optionLabelProp="label"
-          >
-            {allLayers.map(l => (
-              <Select.Option value={l.id} label={l.id} class="flex flex-row justify-center items-center">
-                <Space>
-                  <span role="img" aria-label={l.id}>
-                    <img src={l.image} style={{ height: 80, width: 80 }}/>
-                  </span>
-                  Layer {l.id}
-                </Space>
-              </Select.Option>
-            ))}
-          </Select>
-        );
+    case "ImageLayer":
+      return (
+        <Select placeholder="Select a layer" optionLabelProp="label">
+          {imageLayers.map((l) => (
+            <Select.Option
+              value={l.id}
+              label={l.id}
+              class="flex flex-row justify-center items-center"
+            >
+              <Space>
+                <span role="img" aria-label={l.id}>
+                  <img src={l.image} style={{ height: 80, width: 80 }} />
+                </span>
+                Layer {l.id}
+              </Space>
+            </Select.Option>
+          ))}
+        </Select>
+      );
+    case "Layer":
+      return (
+        <Select placeholder="Select a layer" optionLabelProp="label">
+          {allLayers.map((l) => (
+            <Select.Option
+              value={l.id}
+              label={l.id}
+              class="flex flex-row justify-center items-center"
+            >
+              <Space>
+                <span role="img" aria-label={l.id}>
+                  <img src={l.image} style={{ height: 80, width: 80 }} />
+                </span>
+                Layer {l.id}
+              </Space>
+            </Select.Option>
+          ))}
+        </Select>
+      );
     // TODO: add filepicker
     // case "filepicker":
     //   return <Input type="file" onChange={convertToBase64}/>;
@@ -85,8 +94,14 @@ const LayerFormModal = ({
   loading,
   currentState,
 }) => {
-  const maskLayers = currentState.filter(layer => (layer["metadata"]["op"] === "mask" || layer["metadata"]["op"] === "sam"));
-  const imageLayers = currentState.filter(layer => (layer["metadata"]["op"] !== "mask" && layer["metadata"]["op"] !== "sam"));
+  const maskLayers = currentState.filter(
+    (layer) =>
+      layer["metadata"]["op"] === "mask" || layer["metadata"]["op"] === "sam"
+  );
+  const imageLayers = currentState.filter(
+    (layer) =>
+      layer["metadata"]["op"] !== "mask" && layer["metadata"]["op"] !== "sam"
+  );
 
   function titleCapitalize(str) {
     return str
@@ -100,6 +115,7 @@ const LayerFormModal = ({
       open={open}
       onOk={handleOk}
       onCancel={handleCancel}
+      maskClosable={false}
       footer={[]}
     >
       <Form
@@ -125,16 +141,22 @@ const LayerFormModal = ({
             key={index}
             label={titleCapitalize(field.label)}
             name={field.label}
-            required={field.placeholder === ''}
+            required={field.placeholder === ""}
             rules={[
               {
-                required: field.placeholder === '',
+                required: field.placeholder === "",
                 message:
                   "Please input your " + titleCapitalize(field.label) + "!",
               },
             ]}
           >
-            {generateFieldComponent(field, field.placeholder, currentState, maskLayers, imageLayers)}
+            {generateFieldComponent(
+              field,
+              field.placeholder,
+              currentState,
+              maskLayers,
+              imageLayers
+            )}
           </Form.Item>
         ))}
 
