@@ -5,6 +5,8 @@ import { Stage, Layer, Image, Line } from "react-konva";
 // mask should have context of the size of the image
 const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
   const [windowImg, setWindowImg] = useState(null);
+  const [height, setHeight] = useState(512);
+  const [width, setWidth] = useState(512);
   const [tool, setTool] = useState("pen");
   const [lines, setLines] = useState([]);
   const isDrawing = useRef(false);
@@ -24,7 +26,11 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
         };
       });
     }
-    getImage(imgSrc).then(setWindowImg);
+    getImage(imgSrc).then((img) => {
+      setWindowImg(img);
+      setWidth(img.width);
+      setHeight(img.height);
+    });
   }, [imgSrc]);
 
   const reset = () => {
@@ -124,13 +130,13 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
         ]}
         onChange={(value) => setTool(value)}
       />
-      <p className="text-sm italic py-2">
+      {/* <p className="text-sm italic py-2">
         Currently, this tool only supports 512 x 512 images.
-      </p>
+      </p> */}
       <div className="flex items-center justify-center">
         <Stage
-          width={512}
-          height={512}
+          width={width}
+          height={height}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
@@ -139,8 +145,8 @@ const MaskModal = ({ imgSrc, title, open, handleOk, handleCancel }) => {
           <Layer>
             <Image
               image={windowImg}
-              width={512}
-              height={512}
+              width={width}
+              height={height}
               opacity={0.8}
             ></Image>
           </Layer>

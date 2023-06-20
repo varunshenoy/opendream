@@ -108,6 +108,12 @@ class Layer:
     
     def resize(self, width: int, height: int):
         self.image = self.image.resize((width, height))
+        
+    def resize_to_nearest_eighth(self):
+        width, height = self.image.size
+        width = round(width / 8) * 8
+        height = round(height / 8) * 8
+        self.image = self.image.resize((width, height))
     
 
 class ImageLayer(Layer):

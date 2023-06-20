@@ -29,7 +29,7 @@ const generateFieldComponent = (
             >
               <Space>
                 <span role="img" aria-label={l.id}>
-                  <img src={l.image} style={{ height: 80, width: 80 }} />
+                  <img src={l.image} style={{ width: 80 }} />
                 </span>
                 Layer {l.id}
               </Space>
@@ -48,7 +48,7 @@ const generateFieldComponent = (
             >
               <Space>
                 <span role="img" aria-label={l.id}>
-                  <img src={l.image} style={{ height: 80, width: 80 }} />
+                  <img src={l.image} style={{ width: 80 }} />
                 </span>
                 Layer {l.id}
               </Space>
