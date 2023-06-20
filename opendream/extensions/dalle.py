@@ -1,7 +1,7 @@
 from opendream import opendream
 from opendream.layer import Layer
 
-@opendream.define_op
+@opendream.define_op(active=False)
 def dream(prompt: str):
     import openai
     import os
