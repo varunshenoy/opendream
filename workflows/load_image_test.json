@@ -1,9 +1,0 @@
-{
-    "0": {
-        "op": "load_image_from_path",
-        "params": [
-            "test.png"
-        ],
-        "options": {}
-    }
-}
