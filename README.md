@@ -76,6 +76,6 @@ The method has a few requirements:
 
 ## Contributions and Licensing
 
-_Opendream was built by Varun Shenoy, Eric Zhou, Shashank Rammoorthy, and Rahul Shiv as a part of Stanford's [CS 348K](https://cs348k.stanford.edu/)._
+_Opendream was built by Varun Shenoy, Eric Lou, Shashank Rammoorthy, and Rahul Shiv as a part of Stanford's [CS 348K](https://cs348k.stanford.edu/)._
 
 Feel free to provide any contibutions you deem necessary or useful. This project is licensed under the MIT License.

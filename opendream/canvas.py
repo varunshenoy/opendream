@@ -37,7 +37,7 @@ class Canvas:
     def delete_layer(self, layer_id: str) -> bool:
         # and delete all layers that came after it
         for i, layer_name in enumerate(self.ordering):
-            if layer_name == layer_id:
+            if layer_name == layer_id: 
                 del self.layers[layer_name]
                 for layer_name in self.ordering[i+1:]:
                     del self.layers[layer_name]

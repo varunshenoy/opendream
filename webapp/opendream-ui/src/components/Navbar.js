@@ -45,6 +45,7 @@ export const Navbar = ({ setCurrentState, setImage }) => {
       setExtensionLink("");
       success();
       setIsModalOpen(false);
+      window.location.reload(true);
     });
   };
   const handleCancel = () => {
