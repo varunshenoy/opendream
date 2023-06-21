@@ -2,6 +2,8 @@
 
 Opendream brings much needed and familiar features, such as layering, non-destructive editing, portability, and easy-to-write extensions, to your Stable Diffusion workflows.
 
+![hero](images/hero.png)
+
 ## Getting started
 
 1. Clone this repository.
@@ -15,7 +17,7 @@ For example, popular interfaces like [Automatic1111](https://github.com/AUTOMATI
 
 ### Layering and Non-destructive Editing
 
-Non-destructive editing is a method of image manipulation that preserves the original image data while allowing users to make adjustments and modifications without overwriting previous work. This approach facilitates experimentation and provides more control over the editing process by using layers and masks.
+Non-destructive editing is a method of image manipulation that preserves the original image data while allowing users to make adjustments and modifications without overwriting previous work. This approach facilitates experimentation and provides more control over the editing process by using layers and masks. When you delete a layer, all layers after it also get deleted. This guarantees that all layers currently on the canvas are a product of other existing layers. This also allows one to deterministically "replay" a workflow.
 
 Like Photoshop, Opendream supports non-destructive editing out of the box. Learn more about the principles of non-destructive editing in Photoshop [here](https://helpx.adobe.com/photoshop/using/nondestructive-editing.html).
 
@@ -23,11 +25,13 @@ Like Photoshop, Opendream supports non-destructive editing out of the box. Learn
 
 Users can also save their current workflows into a portable file format that can be opened up at a later time or shared with collaborators. In this context, a "state" is just a JSON file describing all of the current layers and how they were created.
 
+![workflow](images/workflow.png)
+
 ### Support Simple to Write, Easy to Install Extensions
 
 As the open-source ecosystem flourishes around these models and tools, extensibility has also become a major concern. While Automatic1111 does offer extensions, they are often difficult to program, use, and install. It is far from being as full-featured as an application like Adobe Photoshop.
 
-As new features for tools like ControlNet are released, users should be able to seamlessly integrate them into their artistic workflows with minimal overload.
+As new features for Stable Diffusion, like ControlNet, are released, users should be able to seamlessly integrate them into their artistic workflows with minimal overload and time.
 
 Opendream makes writing and using new diffusion features as simple as writing a Python function. Keep reading to learn how.
 
