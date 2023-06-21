@@ -1,4 +1,4 @@
-# Opendream: A Better Stable Diffusion Web UI
+# Opendream: A Web UI For the Rest of Us 💭 🎨
 
 Opendream brings much needed and familiar features, such as layering, non-destructive editing, portability, and easy-to-write extensions, to your Stable Diffusion workflows.
 
