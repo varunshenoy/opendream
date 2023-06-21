@@ -1,11 +1,11 @@
 accelerate==0.20.3
 controlnet_aux==0.0.3
-diffusers==0.16.1
+diffusers==0.17.1
 fastapi==0.95.2
 numpy==1.23.5
 Pillow==9.5.0
 pytest==7.1.2
 requests==2.28.2
-segment-anything @ git+https://github.com/facebookresearch/segment-anything.git@6fdee8f2727f4506cfbbe553e23b895e27956588
+segment-anything==1.0
 torch==2.0.1
 transformers
