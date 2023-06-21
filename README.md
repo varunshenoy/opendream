@@ -42,7 +42,7 @@ Any image manipulation logic can be easily written as an extension. With extensi
 There are two ways to load extensions.
 
 1. Install a pre-written one through the Web UI.
-2. (Manual) Download a valid extension file (or write one yourself!) and add it to the `opendream/extensions` folder. Instructions for writing your own extension are below.
+2. _(Manual)_ Download a valid extension file (or write one yourself!) and add it to the `opendream/extensions` folder. Instructions for writing your own extension are below.
 
 Here is a sampling of currently supported extensions. You can use the links to install any given extension through the Web UI.
 
@@ -72,6 +72,6 @@ The method has a few requirements:
 
 ## Contributions and Licensing
 
-_Opendream was built by Varun Shenoy, Eric Zhou, Shashank Rammoorthy, and Rahul Shiv as a part of Stanford's CS 348K._
+_Opendream was built by Varun Shenoy, Eric Zhou, Shashank Rammoorthy, and Rahul Shiv as a part of Stanford's [CS 348K](https://cs348k.stanford.edu/)._
 
 Feel free to provide any contibutions you deem necessary or useful. This project is licensed under the MIT License.
