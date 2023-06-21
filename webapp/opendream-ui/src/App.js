@@ -10,11 +10,19 @@ function App() {
 
   return (
     <>
-      <Navbar setImage={setImage} setCurrentState={setCurrentState}/>
+      <Navbar
+        setImage={setImage}
+        currentState={currentState}
+        setCurrentState={setCurrentState}
+      />
       <div className="mt-10 pb-8">
         <div className="mx-auto max-w-3xl lg:max-w-7xl">
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
-            <LayersPanel setImage={setImage} currentState={currentState} setCurrentState={setCurrentState} />
+            <LayersPanel
+              setImage={setImage}
+              currentState={currentState}
+              setCurrentState={setCurrentState}
+            />
             <Canvas image={image} />
           </div>
         </div>

@@ -134,6 +134,10 @@ export const Navbar = ({ setCurrentState, setImage }) => {
         onCancel={handleCancel}
         footer={[<Button onClick={handleOk}>Download</Button>]}
       >
+        <p className="pt-2 pb-4 text-xs italic">
+          Installing an extension will refresh your state. Please save before
+          proceeding.
+        </p>
         <Input
           size="large"
           placeholder="Enter a URL (e.g. a file on GitHub)"
