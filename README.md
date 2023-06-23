@@ -21,7 +21,7 @@ Non-destructive editing is a method of image manipulation that preserves the ori
 
 Like Photoshop, Opendream supports non-destructive editing out of the box. Learn more about the principles of non-destructive editing in Photoshop [here](https://helpx.adobe.com/photoshop/using/nondestructive-editing.html).
 
-![layers](images/layering.png)
+![layers](images/editing.png)
 
 ### Save and Share Workflows
 
