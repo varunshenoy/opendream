@@ -21,6 +21,8 @@ Non-destructive editing is a method of image manipulation that preserves the ori
 
 Like Photoshop, Opendream supports non-destructive editing out of the box. Learn more about the principles of non-destructive editing in Photoshop [here](https://helpx.adobe.com/photoshop/using/nondestructive-editing.html).
 
+![layers](images/editing.png)
+
 ### Save and Share Workflows
 
 Users can also save their current workflows into a portable file format that can be opened up at a later time or shared with collaborators. In this context, a "state" is just a JSON file describing all of the current layers and how they were created.
