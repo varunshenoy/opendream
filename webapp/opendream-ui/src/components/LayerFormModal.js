@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Input, Button, Form, Select, Space } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 const convertToBase64 = (e) => {
   const file = e.target.files[0];
@@ -79,6 +80,14 @@ const generateFieldComponent = (
     // case "filepicker":
     //   return <Input type="file" onChange={convertToBase64}/>;
     default:
+      if (field.label.includes("prompt")) {
+        return (
+          <TextArea
+            placeholder={placeholder}
+            autoSize={{ minRows: 3, maxRows: 6 }}
+          />
+        );
+      }
       return <Input placeholder={placeholder} />;
   }
 };
