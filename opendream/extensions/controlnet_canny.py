@@ -6,9 +6,9 @@ from opendream.layer import ImageLayer, Layer
 from controlnet_aux import CannyDetector
 
 @opendream.define_op
-def controlnet_canny(image_layer: ImageLayer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
+def controlnet_canny(control_image_layer: ImageLayer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
     canny = CannyDetector()
-    canny_image = canny(image_layer.get_image())
+    canny_image = canny(control_image_layer.get_image())
     
     controlnet = ControlNetModel.from_pretrained("lllyasviel/sd-controlnet-canny", torch_dtype=torch.float32)
     pipe = StableDiffusionControlNetPipeline.from_pretrained(

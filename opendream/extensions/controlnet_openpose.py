@@ -6,9 +6,9 @@ from opendream.layer import ImageLayer, Layer
 from controlnet_aux import OpenposeDetector
 
 @opendream.define_op
-def controlnet_openpose(image_layer: ImageLayer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
+def controlnet_openpose(control_image_layer: ImageLayer, prompt, device: str = "cpu", model_ckpt: str = "runwayml/stable-diffusion-v1-5", batch_size = 1, seed = 42, selected = 0, num_steps = 20, **kwargs):
     openpose = OpenposeDetector.from_pretrained("lllyasviel/Annotators")
-    openpose_image = openpose(image_layer.get_image(), hand_and_face=True)
+    openpose_image = openpose(control_image_layer.get_image(), hand_and_face=True)
     
     controlnet = ControlNetModel.from_pretrained("lllyasviel/sd-controlnet-openpose", torch_dtype=torch.float32)
     pipe = StableDiffusionControlNetPipeline.from_pretrained(
