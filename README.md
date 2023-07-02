@@ -52,15 +52,15 @@ There are two ways to load extensions.
 
 Here is a sampling of currently supported extensions. You can use the links to install any given extension through the Web UI.
 
-| **Extension**                                       | **Link**                                                                                                                                                    |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OpenAI's DALL-E                                     | [File](https://gist.githubusercontent.com/varunshenoy/4a9a6bbfedfa7def28178a8f0563320a/raw/d2d10faa0fad8c2d251e599d962b0c7f62c06db0/dalle.py)               |
-| Instruct Pix2Pix                                    | [File](https://gist.githubusercontent.com/varunshenoy/894c7a723de6b4651380dd7fa2a81724/raw/fa678d8d6c430421fb481f7023ad76898dd27ad6/instruct_pix2pix.py)    |
-| ControlNet Canny                                    | [File](https://gist.githubusercontent.com/varunshenoy/0b0455449454e5856021fe2971b78352/raw/1c08b376b499c25c84976eade71db9aa355dba47/controlnet_canny.py)    |
-| ControlNet Openpose                                 | [File](https://gist.githubusercontent.com/varunshenoy/380722906b8ff184569af57e06fd37b7/raw/728832370db0448bc2807ffc9e267635749e6a9f/controlnet_openpose.py) |
-| Segment Anything                                    | [File](https://gist.githubusercontent.com/varunshenoy/5fbc883360e5ab2a3c023ce1e286ddd5/raw/efbc92d27ae2209b15948fb52f657e88c185b349/sam.py)                 |
-| PhotoshopGPT                                        | [Gist](https://gist.github.com/varunshenoy/63054e7a479f256974416ef45a51e6a0)                                                                                |
-| ControlNet Super-resolution (requires a lot of RAM) | [File](https://gist.githubusercontent.com/varunshenoy/9fb80aa0eff0fec4ef4344ae9b108730/raw/cffd5e4542a5232ee0144700650a802e37f0434b/superresolution.py)     |
+| **Extension**                        | **Link**                                                                                                                                                         |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OpenAI's DALL-E                      | [File](https://gist.githubusercontent.com/varunshenoy/4a9a6bbfedfa7def28178a8f0563320a/raw/d2d10faa0fad8c2d251e599d962b0c7f62c06db0/dalle.py)                    |
+| Instruct Pix2Pix                     | [File](https://gist.githubusercontent.com/varunshenoy/894c7a723de6b4651380dd7fa2a81724/raw/fa678d8d6c430421fb481f7023ad76898dd27ad6/instruct_pix2pix.py)         |
+| ControlNet Canny                     | [File](https://gist.githubusercontent.com/varunshenoy/0b0455449454e5856021fe2971b78352/raw/1c08b376b499c25c84976eade71db9aa355dba47/controlnet_canny.py)         |
+| ControlNet Openpose                  | [File](https://gist.githubusercontent.com/varunshenoy/380722906b8ff184569af57e06fd37b7/raw/728832370db0448bc2807ffc9e267635749e6a9f/controlnet_openpose.py)      |
+| Segment Anything                     | [File](https://gist.githubusercontent.com/varunshenoy/5fbc883360e5ab2a3c023ce1e286ddd5/raw/efbc92d27ae2209b15948fb52f657e88c185b349/sam.py)                      |
+| PhotoshopGPT                         | [Gist](https://gist.github.com/varunshenoy/63054e7a479f256974416ef45a51e6a0)                                                                                     |
+| Stable Diffusion (hosted on Baseten) | [File](https://gist.githubusercontent.com/varunshenoy/f029c55536bb7e4fac61a595e836d930/raw/f7e693c8aa42a814d05198c28a843a97c8f6a4c6/baseten_stable_diffusion.py) |
 
 Feel free to make a PR if you create a useful extension!
 
