@@ -62,6 +62,8 @@ Here is a sampling of currently supported extensions. You can use the links to i
 | Segment Anything            | [File](https://gist.githubusercontent.com/varunshenoy/5fbc883360e5ab2a3c023ce1e286ddd5/raw/efbc92d27ae2209b15948fb52f657e88c185b349/sam.py)                      |
 | PhotoshopGPT                | [Gist](https://gist.github.com/varunshenoy/63054e7a479f256974416ef45a51e6a0)                                                                                     |
 
+Note that extensions may have their own requirements you would need to include in the `requirements.txt` file. For example, you would need to add `openai` if you want to use the DALL-E extension.
+
 Feel free to make a PR if you create a useful extension!
 
 ### Writing Your Own Extension
