@@ -41,7 +41,7 @@ Opendream makes writing and using new diffusion features as simple as writing a 
 
 From the get-go, Opendream supports two key primitive operations baked into the core system: `dream` and `mask_and_inpaint`. In this repository, extensions for `instruct_pix2pix`, `controlnet_canny`, `controlnet_openpose`, and `sam` (Segment Anything) are provided.
 
-Any image manipulation logic can be easily written as an extension. With extensions, you can also decide how certain operations work. For example, you can override the `dream` operation to use OpenAI's DALL-E instead or call a serverless endpoint on a service like AWS or Replicate. [Here's an example using Baseten](https://gist.github.com/varunshenoy/0146a65de2d4db3bad95c2e0e43a66a3).
+Any image manipulation logic can be easily written as an extension. With extensions, you can also decide how certain operations work. For example, you can override the `dream` operation to use OpenAI's DALL-E instead or call a serverless endpoint on a service like AWS or Replicate. [Here's an example using Baseten](https://gist.githubusercontent.com/varunshenoy/f029c55536bb7e4fac61a595e836d930/raw/f7e693c8aa42a814d05198c28a843a97c8f6a4c6/baseten_stable_diffusion.py).
 
 ### Loading an Existing Extension
 
