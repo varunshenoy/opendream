@@ -2,7 +2,7 @@
 
 Opendream brings much needed and familiar features, such as layering, non-destructive editing, portability, and easy-to-write extensions, to your Stable Diffusion workflows.
 
-![hero](images/hero.png)
+![hero](images/demo.mp4)
 
 ## Getting started
 
