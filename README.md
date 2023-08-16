@@ -6,6 +6,7 @@ Opendream brings much needed and familiar features, such as layering, non-destru
 
 ## Getting started
 
+0. *Prerequisites*: Make sure you have Node installed. You can download it [here](https://nodejs.org/en/download).
 1. Clone this repository.
 2. Navigate to this project within your terminal and run `sh ./run_opendream.sh`. After ~30 seconds, both the frontend and backend of the Opendream system should be up and running.
 
